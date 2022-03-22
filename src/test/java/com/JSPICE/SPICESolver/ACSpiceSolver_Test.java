@@ -6,6 +6,7 @@ package com.JSPICE.SPICESolver;
 import com.JSPICE.SElement.ACVoltage;
 import com.JSPICE.SElement.GND;
 import com.JSPICE.SElement.Resistor;
+import com.JSPICE.SElement.Inductor;
 import com.JSPICE.SElement.Wire;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.Util.ComponentTerminals;
@@ -110,7 +111,100 @@ public class ACSpiceSolver_Test {
         assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
     }
 
-        /**
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    @Test
+    public void testVoltageDividerInductor_AC() {
+	/* Tolerance for comparing solution */
+	double tol = 1e-5;
+
+	/* Solution after DC analysis */
+        Complex x[][] = { { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(0, -0.7957747) } };
+
+	/* Instantiate ACSpiceSolver */
+	AbstractSpiceSolver solver = new ACSpiceSolver();
+
+	/* Create an AC Source */
+	ACVoltage source = new ACVoltage();
+
+	/* Create inductors */
+	Inductor l1 = new Inductor();
+        Inductor l2 = new Inductor();
+
+	/* Create circuit GND element */
+	GND g1 = new GND();
+
+	/* Create wires to connect circuit elements*/
+        Wire w1 = new Wire();
+        Wire w2 = new Wire();
+        Wire w3 = new Wire();
+
+	/* Set AC source voltage to 10V */
+        source.setValue(10);
+
+	/* Set Frequency to 1GHz */
+	solver.setFrequency(1e9);
+
+	/* Set l1 and l2 inductances to 1nH each */
+        l1.setValue(1e-9);
+        l2.setValue(1e-9);
+
+	/*                Circuit Topology
+	 *
+	 *
+	 *        w1       l1 1nH         w2
+	 *         ~-----^v^v^v^v^v---------~
+	 *         |                        |
+	 *         |                        |
+	 *        ~~~                       >
+	 *       ~ + ~ source               < l2
+	 *       ~ - ~   10V                > 1nH
+	 *        ~ ~                       <
+	 *         |                        >
+	 *         |                        |
+         *         |          w3            |
+	 *         ~------------------------~
+	 *       -----  
+	 *        --- g1
+	 *         -
+	 */
+
+	/* Use wires to connect the circuit elements as shown above */
+	w1.addTerminal(source, ComponentTerminals.POS_NODE);
+        w1.addTerminal(l1, ComponentTerminals.POS_NODE);
+
+        w2.addTerminal(l1, ComponentTerminals.NEG_NODE);
+        w2.addTerminal(l2, ComponentTerminals.POS_NODE);
+
+        w3.addTerminal(l2, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(source, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(g1, ComponentTerminals.GND);
+
+	/* Add circuit elements to the solver */
+        solver.addElement(source);
+        solver.addElement(l1);
+        solver.addElement(l2);
+        solver.addElement(g1);
+        solver.addWire(w1);
+        solver.addWire(w2);
+        solver.addWire(w3);
+
+	/* Solve for unknow node voltages and branch currents*/
+        solver.solve();
+	
+	/* Assert if solver result matches expected solution */
+        assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
+    }
+
+    /**
      * @brief Test case for Wheatstone bridge topology
      * 
      * @author 1sand0s
