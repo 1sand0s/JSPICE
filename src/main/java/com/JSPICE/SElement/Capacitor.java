@@ -32,17 +32,17 @@ public class Capacitor extends SElement {
     }
 
     @Override
-    public Complex getVoltage(Complex[] result) {
+    public Complex[] getVoltage(Complex[][] result) {
 	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
         int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
 
-	return (ComplexMatrixOperations.Sub(result[posNode],
-					    result[negNode]));
+	return (ComplexMatrixOperations.SubArrays(result[posNode],
+						  result[negNode]));
     }
 
     @Override
-    public Complex getCurrent(Complex[] result,
-			      double frequency) {
+    public Complex[] getCurrent(Complex[][] result,
+				double frequency) {
 	return ComplexMatrixOperations.Multiply(ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
 										       2 * frequency * Math.PI * capacitance),
 						new Complex(0, 1));

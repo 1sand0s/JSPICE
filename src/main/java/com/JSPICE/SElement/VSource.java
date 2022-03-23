@@ -23,13 +23,13 @@ public abstract class VSource extends SElement {
     }
 
     @Override
-    public Complex getVoltage(Complex[] result) {
-        return new Complex(voltage, 0);
+    public Complex[] getVoltage(Complex[][] result) {
+        return null;
     }
-
+    
     @Override
-    public Complex getCurrent(Complex[] result,
-			      double frequency) {
+    public Complex[] getCurrent(Complex[][] result,
+				double frequency) {
         return null;
     }
 }

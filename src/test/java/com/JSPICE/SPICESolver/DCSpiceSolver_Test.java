@@ -34,7 +34,7 @@ public class DCSpiceSolver_Test {
 	double tol = 1e-5;
 
 	/* Solution after DC analysis */
-        Complex x[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(-0.05, 0) } };
+        Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(-0.05, 0) } };
 
 	/* Instantiate DCSpiceSolver */
 	AbstractSpiceSolver solver = new DCSpiceSolver();
@@ -104,17 +104,14 @@ public class DCSpiceSolver_Test {
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
 
-	Complex result[] = new Complex[solver.getResult().length];
-	for(int j = 0; j < result.length; j++){
-	    result[j] = solver.getResult()[j][0];
-	}
+	Complex actual[][] = solver.getResult();
 
 	/* Assert if solver result matches expected solution */
-        assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
-	assertEquals(5, r1.getVoltage(result).magnitude(), tol);
-	assertEquals(5, r2.getVoltage(result).magnitude(), tol);
-	assertEquals(0.05, r1.getCurrent(result, 0).magnitude(), tol);
-	assertEquals(0.05, r2.getCurrent(result, 0).magnitude(), tol);
+        assertTrue(ComplexMatrixOperations.compareMatrices(expected, actual, tol));
+	assertEquals(5, r1.getVoltage(actual)[0].magnitude(), tol);
+	assertEquals(5, r2.getVoltage(actual)[0].magnitude(), tol);
+	assertEquals(0.05, r1.getCurrent(actual, 0)[0].magnitude(), tol);
+	assertEquals(0.05, r2.getCurrent(actual, 0)[0].magnitude(), tol);
     }
 
     /**
@@ -130,7 +127,7 @@ public class DCSpiceSolver_Test {
 	double tol = 1e-5;
 
 	/* Solution after DC analysis */
-        Complex x[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(5, 0) }, { new Complex(-0.2, 0) } };
+        Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(5, 0) }, { new Complex(-0.2, 0) } };
 
 	/* Instantiate DCSpiceSolver */
 	AbstractSpiceSolver solver = new DCSpiceSolver();
@@ -220,8 +217,10 @@ public class DCSpiceSolver_Test {
 
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
+
+	Complex actual[][] = solver.getResult();
 	
 	/* Assert if solver result matches expected solution */
-        assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
+        assertTrue(ComplexMatrixOperations.compareMatrices(expected, actual, tol));
     }
 }

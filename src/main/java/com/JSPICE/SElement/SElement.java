@@ -109,8 +109,8 @@ public abstract class SElement {
      * @since 1.0.0
      * @version 1.0.0
      */
-    public abstract Complex getVoltage(Complex[] result);
-
+    public abstract Complex[] getVoltage(Complex[][] result);
+    
     /**
      * regular
      * 
@@ -121,8 +121,8 @@ public abstract class SElement {
      * @since 1.0.0
      * @version 1.0.0
      */
-    public abstract Complex getCurrent(Complex[] result,
-				       double frequency);
+    public abstract Complex[] getCurrent(Complex[][] result,
+					 double frequency);
 
     /**
      * regular

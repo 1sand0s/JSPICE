@@ -481,40 +481,6 @@ public class ComplexMatrixOperations {
      * @version 1.0.0
      * @exception
      */
-    public static Complex[][] matrixConcatenator(Complex g[][],
-                                                 Complex b[][],
-                                                 Complex c[][],
-                                                 Complex d[][]) {
-        Complex x[][] = new Complex[g.length + c.length - 1][g.length + c.length - 1];
-        /*for (int i = 0; i < g.length - 1; i++) {
-            System.arraycopy(g[i], 0, x[i], 0, g.length - 1);
-            System.arraycopy(b[i], 0, x[i], g.length - 1, c.length);
-	    }*/
-	for (int i = 1; i < g.length; i++) {
-            System.arraycopy(g[i], 1, x[i - 1], 0, g.length - 1);
-            System.arraycopy(b[i], 0, x[i - 1], g.length - 1, c.length);
-        }
-        /*for (int i = 0; i < c.length; i++) {
-            System.arraycopy(c[i], 0, x[i + g.length - 1], 0, b.length - 1);
-            System.arraycopy(d[i], 0, x[i + g.length - 1], b.length - 1, d.length);
-	    }*/
-	for (int i = 0; i < c.length; i++) {
-            System.arraycopy(c[i], 1, x[i + g.length - 1], 0, b.length - 1);
-            System.arraycopy(d[i], 0, x[i + g.length - 1], b.length - 1, d.length);
-        }
-        return x;
-    }
-
-    /**
-     * regular
-     * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
-     * @version 1.0.0
-     * @exception
-     */
     public static Complex removeRedundancy(Complex d) {
         Complex d1 = new Complex(0, 0);
         d1.setReal(Math.abs(d.getReal()) < 1e-10 ? 0 : d.getReal());

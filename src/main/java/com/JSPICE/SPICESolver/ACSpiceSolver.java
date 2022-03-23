@@ -38,7 +38,7 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
         B = new Complex[wires.size()][iVSource + iISource];
         C = new Complex[iVSource + iISource][wires.size()];
         D = new Complex[iVSource + iISource][iVSource + iISource];
-        z = new Complex[wires.size() + iVSource + iISource - 1][1];
+        z = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
 
         numberNodes();
 
@@ -55,13 +55,11 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
             if (element instanceof VSource)
                 vSourceIndex++;
         }
-        Complex A[][] = ComplexMatrixOperations.matrixConcatenator(G, B, C, D);
-        Complex xTemp[][] = ComplexMatrixOperations.computeLinearEquation(A, z);
-       
-	x = new Complex[wires.size() + iVSource + iISource][1];
-	x[0][0] = new Complex(0, 0);
-	for(int j = 0; j < xTemp.length; j++){
-	    x[j + 1][0] = xTemp[j][0];
-	}
+
+	/* Exclude Row and Column corresponding to GND node to prevent singular matrix */
+        Complex A[][] = constructMNAMatrix(G, B, C, D);
+ 
+        x = ComplexMatrixOperations.computeLinearEquation(A, z);
+	x = addGNDToResult(x);
     }
 }
