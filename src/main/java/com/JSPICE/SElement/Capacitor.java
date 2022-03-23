@@ -2,6 +2,7 @@ package com.JSPICE.SElement;
 
 import com.JSPICE.Util.ComponentTerminals;
 import com.JSPICE.SMath.Complex;
+import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.Util.ComponentDenominations;
 
 /**
@@ -31,15 +32,20 @@ public class Capacitor extends SElement {
     }
 
     @Override
-    public double getVoltage(double[] result) {
-        int[] nodes = terminals.getTerminals();
+    public Complex getVoltage(Complex[] result) {
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
 
-        return (result[nodes[0]] - result[nodes[1]]);
+	return (ComplexMatrixOperations.Sub(result[posNode],
+					    result[negNode]));
     }
 
     @Override
-    public double getCurrent(double[] result) {
-        return (getVoltage(result) * capacitance);
+    public Complex getCurrent(Complex[] result,
+			      double frequency) {
+	return ComplexMatrixOperations.Multiply(ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
+										       2 * frequency * Math.PI * capacitance),
+						new Complex(0, 1));
     }
 
     @Override

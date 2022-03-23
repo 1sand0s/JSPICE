@@ -56,8 +56,12 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
                 vSourceIndex++;
         }
         Complex A[][] = ComplexMatrixOperations.matrixConcatenator(G, B, C, D);
-
-        x = ComplexMatrixOperations.computeLinearEquation(A, z);
+        Complex xTemp[][] = ComplexMatrixOperations.computeLinearEquation(A, z);
+       
+	x = new Complex[wires.size() + iVSource + iISource][1];
+	x[0][0] = new Complex(0, 0);
+	for(int j = 0; j < xTemp.length; j++){
+	    x[j + 1][0] = xTemp[j][0];
+	}
     }
-
 }

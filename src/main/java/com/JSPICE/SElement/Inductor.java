@@ -1,6 +1,7 @@
 package com.JSPICE.SElement;
 
 import com.JSPICE.SMath.Complex;
+import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.Util.ComponentDenominations;
 import com.JSPICE.Util.ComponentTerminals;
 
@@ -29,19 +30,24 @@ public class Inductor extends SElement {
     public void setValue(double value) {
         inductance = value;
     }
-
+    
     @Override
-    public double getVoltage(double[] result) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+    public Complex getVoltage(Complex[] result) {
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
 
+	return (ComplexMatrixOperations.Sub(result[posNode],
+					    result[negNode]));
+    }
+    
     @Override
-    public double getCurrent(double[] result) {
-        // TODO Auto-generated method stub
-        return 0;
+    public Complex getCurrent(Complex[] result,
+			      double frequency) {
+	return ComplexMatrixOperations.Multiply(ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
+										       1 / (2 * Math.PI * frequency * inductance)),
+						new Complex(0, -1));
     }
-
+    
     @Override
     public void stampMatrixDC(Complex[][] G,
                               Complex[][] B,

@@ -105,22 +105,24 @@ public abstract class SElement {
      * 
      * @author 1sand0s
      * @param result : double array of results after solve
-     * @return Double : get voltage
+     * @return Complex : get voltage
      * @since 1.0.0
      * @version 1.0.0
      */
-    public abstract double getVoltage(double[] result);
+    public abstract Complex getVoltage(Complex[] result);
 
     /**
      * regular
      * 
      * @author 1sand0s
-     * @@param result : double array of results after solve
-     * @return Double : get current
+     * @param result : double array of results after solve
+     * @param frequency : frequency 
+     * @return Complex : get current
      * @since 1.0.0
      * @version 1.0.0
      */
-    public abstract double getCurrent(double[] result);
+    public abstract Complex getCurrent(Complex[] result,
+				       double frequency);
 
     /**
      * regular

@@ -1,7 +1,7 @@
 package com.JSPICE.SElement;
 
 import com.JSPICE.Util.ComponentTerminals;
-import com.JSPICE.SMath.Complex;
+import com.JSPICE.SMath.*;
 import com.JSPICE.Util.ComponentDenominations;
 
 /**
@@ -30,14 +30,19 @@ public class Resistor extends SElement {
     }
 
     @Override
-    public double getVoltage(double[] result) {
-        int[] nodes = terminals.getTerminals();
-        return (result[nodes[0]] - result[nodes[1]]);
+    public Complex getVoltage(Complex[] result) {
+        int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
+
+        return (ComplexMatrixOperations.Sub(result[posNode],
+					    result[negNode]));
     }
 
     @Override
-    public double getCurrent(double[] result) {
-        return getVoltage(result) / resistance;
+    public Complex getCurrent(Complex[] result,
+			      double frequency) {
+        return ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
+						      1 / resistance);
     }
 
     @Override

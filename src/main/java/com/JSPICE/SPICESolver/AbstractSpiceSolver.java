@@ -126,7 +126,7 @@ public abstract class AbstractSpiceSolver {
      * @exception
      */
     public void numberNodes() {
-        int index = 0;
+        int index = 1;
         int gndIndex = -1;
         for (int j = 0; j < wires.size(); j++) {
             if (!wires.get(j).isGND()) {
@@ -139,7 +139,7 @@ public abstract class AbstractSpiceSolver {
 
         if (gndIndex != -1)
             for (int i = 0; i < wires.get(gndIndex).getNumElements(); i++)
-                wires.get(gndIndex).getElementAtIndex(i).setTerminalIndex(index,
+                wires.get(gndIndex).getElementAtIndex(i).setTerminalIndex(0,
                         wires.get(gndIndex).getTerminalAtIndex(i));
     }
 }

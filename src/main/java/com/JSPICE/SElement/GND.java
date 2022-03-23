@@ -28,15 +28,16 @@ public class GND extends SElement {
     }
 
     @Override
-    public double getVoltage(double[] result) {
+    public Complex getVoltage(Complex[] result) {
         // TODO Auto-generated method stub
-        return 0;
+        return null;
     }
 
     @Override
-    public double getCurrent(double[] result) {
+    public Complex getCurrent(Complex[] result,
+			      double frequency) {
         // TODO Auto-generated method stub
-        return 0;
+        return null;
     }
 
     @Override
