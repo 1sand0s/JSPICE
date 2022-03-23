@@ -7,6 +7,7 @@ import com.JSPICE.SElement.ACVoltage;
 import com.JSPICE.SElement.GND;
 import com.JSPICE.SElement.Resistor;
 import com.JSPICE.SElement.Inductor;
+import com.JSPICE.SElement.Capacitor;
 import com.JSPICE.SElement.Wire;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.Util.ComponentTerminals;
@@ -200,6 +201,99 @@ public class ACSpiceSolver_Test {
 	/* Solve for unknow node voltages and branch currents*/
         solver.solve();
 	
+	/* Assert if solver result matches expected solution */
+        assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    @Test
+    public void testVoltageDividerCapacitor_AC() {
+	/* Tolerance for comparing solution */
+	double tol = 1e-5;
+
+	/* Solution after DC analysis */
+        Complex x[][] = { { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(0, 31.415926) } };
+
+	/* Instantiate ACSpiceSolver */
+	AbstractSpiceSolver solver = new ACSpiceSolver();
+
+	/* Create an AC Source */
+	ACVoltage source = new ACVoltage();
+
+	/* Create capacitors */
+	Capacitor c1 = new Capacitor();
+        Capacitor c2 = new Capacitor();
+
+	/* Create circuit GND element */
+	GND g1 = new GND();
+
+	/* Create wires to connect circuit elements*/
+        Wire w1 = new Wire();
+        Wire w2 = new Wire();
+        Wire w3 = new Wire();
+
+	/* Set AC source voltage to 10V */
+        source.setValue(10);
+
+	/* Set Frequency to 1GHz */
+	solver.setFrequency(1e9);
+
+	/* Set c1 and c2 capacitances to 1nF each */
+        c1.setValue(1e-9);
+        c2.setValue(1e-9);
+
+	/*                Circuit Topology
+	 *
+	 *
+	 *        w1       c1 1nF         w2
+	 *         ~-----------||-----------~
+	 *         |                        |
+	 *         |                        |
+	 *        ~~~                       |
+	 *       ~ + ~ source             ---- c2
+	 *       ~ - ~   10V              ---- 1nF
+	 *        ~ ~                       |
+	 *         |                        |
+	 *         |                        |
+         *         |          w3            |
+	 *         ~------------------------~
+	 *       -----  
+	 *        --- g1
+	 *         -
+	 */
+
+	/* Use wires to connect the circuit elements as shown above */
+	w1.addTerminal(source, ComponentTerminals.POS_NODE);
+        w1.addTerminal(c1, ComponentTerminals.POS_NODE);
+
+        w2.addTerminal(c1, ComponentTerminals.NEG_NODE);
+        w2.addTerminal(c2, ComponentTerminals.POS_NODE);
+
+        w3.addTerminal(c2, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(source, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(g1, ComponentTerminals.GND);
+
+	/* Add circuit elements to the solver */
+        solver.addElement(source);
+        solver.addElement(c1);
+        solver.addElement(c2);
+        solver.addElement(g1);
+        solver.addWire(w1);
+        solver.addWire(w2);
+        solver.addWire(w3);
+
+	/* Solve for unknow node voltages and branch currents*/
+        solver.solve();
+	ComplexMatrixOperations.printMatrices(solver.getResult());
 	/* Assert if solver result matches expected solution */
         assertTrue(ComplexMatrixOperations.compareMatrices(x, solver.getResult(), tol));
     }
