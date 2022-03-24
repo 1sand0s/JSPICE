@@ -30,7 +30,10 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
     }
 
     @Override
-    public void setTimeStep(double tmin, double tmax, int numPoints, AbstractSpiceSolver.TimeStepType type) {
+    public void setTimeStep(double tmin,
+			    double tmax,
+			    int numPoints,
+			    AbstractSpiceSolver.TimeStepType type) {
 	this.tmin = tmin;
 	this.tmax = tmax;
 	this.type = type;
@@ -39,7 +42,9 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
     }
 
     @Override
-    public void setTimeStep(double tmin, double tmax, double tStep) {
+    public void setTimeStep(double tmin,
+			    double tmax,
+			    double tStep) {
 	this.tmin = tmin;
 	this.tmax = tmax;
 	this.tStep = tStep;
