@@ -82,4 +82,42 @@ public class Capacitor extends SElement {
         G[posNode][negNode].add(new Complex(0, (capacitance * frequency * 2 * Math.PI)));
         G[negNode][posNode].add(new Complex(0, (capacitance * frequency * 2 * Math.PI)));
     }
+    
+    @Override
+    public void stampMatrixTransient(Complex[][] G,
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double deltaT) {
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+	int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
+	
+        /* Capacitor transient equation
+	 *
+	 *  i = C * dv/dt
+	 *  
+	 * If 'dt' is small then variation of 'v(t)' about t in the range (t - dt, t) 
+	 * can be assumed to be linear, therefore
+	 *
+	 *  i = C * (v(t) - v(t - dt))/(dt)
+	 *  (v(t) - v(t - dt))/i = dt/C
+	 *
+	 *  Therefore, for impedance we stamp 'dt/C'
+	 */
+        G[posNode][posNode].add(new Complex(-(capacitance / deltaT), 0));
+        G[negNode][negNode].add(new Complex(-(capacitance / deltaT), 0));
+        G[posNode][negNode].add(new Complex(+(capacitance / deltaT), 0));
+        G[negNode][posNode].add(new Complex(+(capacitance / deltaT), 0));
+
+	/* Capacitors stamped as current sources
+	 *
+	 * is = -C * v(t - dt)/dt
+	 */
+	double voltage = getVoltage(result)[0].magnitude(); // v(t - dt)
+        z[posNode][0].add(new Complex(+capacitance * voltage / deltaT, 0));
+	z[negNode][0].add(new Complex(-capacitance * voltage / deltaT, 0));
+    }
 }

@@ -158,4 +158,22 @@ public abstract class SElement {
                                        Complex[][] z,
                                        int iSourceIndex,
                                        double frequency);
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public abstract void stampMatrixTransient(Complex[][] G,
+					      Complex[][] B,
+					      Complex[][] C,
+					      Complex[][] D,
+					      Complex[][] z,
+					      Complex[][] result,
+					      int iSourceIndex,
+					      double deltaT);
 }

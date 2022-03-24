@@ -58,4 +58,15 @@ public class GND extends SElement {
                               int iSourceIndex,
                               double frequency) {
     }
+
+    @Override
+    public void stampMatrixTransient(Complex[][] G,
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double deltaT) {
+    }
 }

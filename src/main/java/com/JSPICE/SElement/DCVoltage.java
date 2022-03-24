@@ -49,11 +49,23 @@ public class DCVoltage extends VSource {
 
         B[posNode][iSourceIndex].add(new Complex(1, 0));
         B[negNode][iSourceIndex].add(new Complex(-1, 0));
-
+	
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
-
+	
         /* DC sources turned off during AC analysis */
         z[G.length + iSourceIndex - 1][0].add(new Complex(voltage * 0, 0));
     }
+    
+    @Override
+    public void stampMatrixTransient(Complex[][] G,
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double deltaT) {
+        stampMatrixDC(G, B, C, D, z, iSourceIndex);
+    }   
 }

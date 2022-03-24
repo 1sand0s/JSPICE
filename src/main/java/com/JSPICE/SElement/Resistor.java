@@ -41,10 +41,10 @@ public class Resistor extends SElement {
     @Override
     public Complex[] getCurrent(Complex[][] result,
 				double frequency) {
-        return ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
+	return ComplexMatrixOperations.ScalarMultiply(getVoltage(result),
 						      1 / resistance);
     }
-
+    
     @Override
     public void stampMatrixDC(Complex[][] G,
                               Complex[][] B,
@@ -70,5 +70,17 @@ public class Resistor extends SElement {
                               int iSourceIndex,
                               double frequency) {
         stampMatrixDC(G, B, C, D, z, iSourceIndex);
+    }
+
+    @Override
+    public void stampMatrixTransient(Complex[][] G,
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double deltaT) {
+	stampMatrixDC(G, B, C, D, z, iSourceIndex);
     }
 }

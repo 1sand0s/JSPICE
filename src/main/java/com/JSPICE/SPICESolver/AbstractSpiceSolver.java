@@ -27,7 +27,13 @@ public abstract class AbstractSpiceSolver {
     protected int iVSource = 0;
     protected int iISource = 0;
     protected int numHarmonics = 1;
-
+    
+    public enum TimeStepType{
+	LINEAR,
+	LOGARITHMIC,
+	PWL
+    };
+    
     /**
      * regular
      * 
@@ -115,6 +121,37 @@ public abstract class AbstractSpiceSolver {
      * @exception
      */
     public void setFrequency(double frequency) {
+    }
+    
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param frequency
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public void setTimeStep(double tmin,
+			    double tmax,
+			    int numPoints,
+			    TimeStepType type) {
+    }
+    
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param frequency
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */    
+    public void setTimeStep(double tmin,
+			    double tmax,
+			    double tStep) {
     }
 
     /**

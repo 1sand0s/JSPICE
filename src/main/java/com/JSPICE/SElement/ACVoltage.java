@@ -59,4 +59,16 @@ public class ACVoltage extends VSource {
 
         z[G.length + iSourceIndex - 1][0].add(new Complex(voltage, 0));
     }
+
+    @Override
+    public void stampMatrixTransient(Complex[][] G,
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double deltaT) {
+	/* AC sources are not allowed for transient simulation */
+    }
 }
