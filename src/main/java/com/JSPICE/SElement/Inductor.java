@@ -99,11 +99,11 @@ public class Inductor extends SElement {
 	 *
 	 *  v = L * di/dt
 	 *  
-	 * If 'dt' is small then variation of 'i(t)' about t in the range (t, t + dt) 
+	 * If 'dt' is small then variation of 'i(t)' about t in the range (t - dt, t) 
 	 * can be assumed to be linear, therefore
 	 *
-	 *  v = L * (i(t + dt) - i(t))/(dt)
-	 *  (i(t + dt) - i(t))/v = dt/L
+	 *  v = L * (i(t) - i(t - dt))/(dt)
+	 *  (i(t) - i(t - dt))/v = dt/L
 	 *
 	 *  Therefore, for impedance we stamp 'L/dt'
 	 */

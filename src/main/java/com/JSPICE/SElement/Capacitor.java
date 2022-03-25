@@ -114,7 +114,7 @@ public class Capacitor extends SElement {
 
 	/* Capacitors stamped as current sources
 	 *
-	 * is = -C * v(t - dt)/dt
+	 * i(t - dt) = -C * v(t - dt)/dt
 	 */
 	double voltage = getVoltage(result)[0].magnitude(); // v(t - dt)
         z[posNode][0].add(new Complex(+capacitance * voltage / deltaT, 0));
