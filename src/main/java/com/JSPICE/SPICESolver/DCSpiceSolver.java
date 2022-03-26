@@ -22,9 +22,16 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
     }
-
+    
     @Override
     public void solve() {
+	solve(circuitElements,
+	      wires);
+    }
+    
+    @Override
+    public void solve(ArrayList<SElement> circuitElements,
+		      ArrayList<Wire> wires) {
         int vSourceIndex = 0;
 
         G = new Complex[wires.size()][wires.size()];

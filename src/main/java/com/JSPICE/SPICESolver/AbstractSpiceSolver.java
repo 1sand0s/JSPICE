@@ -106,6 +106,34 @@ public abstract class AbstractSpiceSolver {
      * @version 1.0.0
      * @exception
      */
+    public abstract void solve(ArrayList<SElement> circuitElements,
+			       ArrayList<Wire> wires);
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public void solve(ArrayList<SElement> circuitElements,
+		      ArrayList<Wire> wires,
+		      double t){
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
     public Complex[][] getResult() {
         return x;
     }
@@ -229,5 +257,19 @@ public abstract class AbstractSpiceSolver {
 	    }
 	}
         return x1;
+    }
+
+    /**
+     * @brief Populates simulation time vector. Valid only
+     *        for Transient simulation
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public void expandTime() {
     }
 }
