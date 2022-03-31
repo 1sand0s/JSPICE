@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  * @author 1sand0s
  *
  */
-public class DCSpiceSolver_Test {
+public class TransientSpiceSolver_Test {
 
     /**
      * @brief Test case for a simple voltage divider
@@ -29,15 +29,15 @@ public class DCSpiceSolver_Test {
      * @version 1.0.0
      */
     @Test
-    public void testVoltageDivider_DC() {
+    public void testVoltageDivider_Transient() {
 	/* Tolerance for comparing solution */
 	double tol = 1e-5;
 
-	/* Solution after DC analysis */
+	/* Solution after Transient analysis */
         Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(-0.05, 0) } };
 
-	/* Instantiate DCSpiceSolver */
-	AbstractSpiceSolver solver = new DCSpiceSolver();
+	/* Instantiate TransientSpiceSolver */
+	AbstractSpiceSolver solver = new TransientSpiceSolver();
 
 	/* Create a DC Source*/
 	DCVoltage source = new DCVoltage();
@@ -53,6 +53,12 @@ public class DCSpiceSolver_Test {
         Wire w1 = new Wire();
         Wire w2 = new Wire();
         Wire w3 = new Wire();
+
+	/* Set SImulation time settings */
+	double tMin = 0.0;
+	double tMax = 1.0;
+	int numPoints = 10;
+	AbstractSpiceSolver.TimeStepType timeStepType = AbstractSpiceSolver.TimeStepType.LINEAR;
 
 	/* Set DC source voltage to 10V */
         source.setValue(10);
@@ -101,6 +107,9 @@ public class DCSpiceSolver_Test {
         solver.addWire(w2);
         solver.addWire(w3);
 
+	/* Add simulation time settings to solver */
+	solver.setTimeStep(tMin, tMax, numPoints, timeStepType);
+
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
 
@@ -122,7 +131,7 @@ public class DCSpiceSolver_Test {
      * @version 1.0.0
      */
     @Test
-    public void testWheatstoneBridge_DC() {
+    public void testWheatstoneBridge_Transient() {
 	/* Tolerance for comparing solution */
 	double tol = 1e-5;
 
@@ -130,7 +139,7 @@ public class DCSpiceSolver_Test {
         Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(5, 0) }, { new Complex(-0.2, 0) } };
 
 	/* Instantiate DCSpiceSolver */
-	AbstractSpiceSolver solver = new DCSpiceSolver();
+	AbstractSpiceSolver solver = new TransientSpiceSolver();
 
 	/* Create a DC Source*/
 	DCVoltage source = new DCVoltage();
@@ -150,6 +159,12 @@ public class DCSpiceSolver_Test {
         Wire w2 = new Wire();
         Wire w3 = new Wire();
 	Wire w4 = new Wire();
+
+	/* Set SImulation time settings */
+	double tMin = 0.0;
+	double tMax = 1.0;
+	int numPoints = 10;
+	AbstractSpiceSolver.TimeStepType timeStepType = AbstractSpiceSolver.TimeStepType.LINEAR;
 
 	/* Set DC source voltage to 10V */
         source.setValue(10);
@@ -214,6 +229,9 @@ public class DCSpiceSolver_Test {
         solver.addWire(w2);
         solver.addWire(w3);
 	solver.addWire(w4);
+	
+	/* Add simulation time settings to solver */
+	solver.setTimeStep(tMin, tMax, numPoints, timeStepType);
 
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
@@ -223,4 +241,4 @@ public class DCSpiceSolver_Test {
 	/* Assert if solver result matches expected solution */
         assertTrue(ComplexMatrixOperations.compareMatrices(expected, actual, tol));
     }
- }
+}

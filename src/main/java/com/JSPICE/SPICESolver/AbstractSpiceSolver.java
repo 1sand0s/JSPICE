@@ -60,6 +60,24 @@ public abstract class AbstractSpiceSolver {
      * @version 1.0.0
      * @exception
      */
+    public void addElements(ArrayList<SElement> elements) {
+	for(int j = 0; j < elements.size(); j++){
+	    circuitElements.add(elements.get(j));
+	    if (elements.get(j) instanceof VSource)
+		iVSource++;   
+	}
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
     public void removeElement(int index) {
         for (int j = 0; j < circuitElements.size(); j++)
             if (circuitElements.get(j).getId_Int() == index) {
@@ -82,6 +100,21 @@ public abstract class AbstractSpiceSolver {
      */
     public void addWire(Wire wire) {
         wires.add(wire);
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public void addWires(ArrayList<Wire> wire) {
+        for(int j = 0; j < wire.size(); j++)
+	    wires.add(wire.get(j));
     }
 
     /**

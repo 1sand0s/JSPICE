@@ -94,10 +94,11 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	 * but the solution of a DC solver will get us to converge faster
 	 */
 	DCSpiceSolver dcSolver = new DCSpiceSolver();
-	dcSolver.solve(circuitElements,
-		       wires);
+	dcSolver.addElements(circuitElements);
+	dcSolver.addWires(wires);
+	dcSolver.solve();
 	x = dcSolver.getResult();
-	
+
 	for(int j = 0; j < time.length; j++){
 	    solve(circuitElements,
 		  wires,
