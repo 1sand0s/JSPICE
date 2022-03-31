@@ -23,6 +23,7 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
     public ACSpiceSolver() {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
+	result = new ACSpiceResult();
     }
 
     @Override
@@ -68,5 +69,7 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
  
         x = ComplexMatrixOperations.computeLinearEquation(A, z);
 	x = addGNDToResult(x);
+
+	result.updateResult(x);
     }
 }

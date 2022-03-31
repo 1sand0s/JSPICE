@@ -16,6 +16,11 @@ public class Complex {
         this.imaginary = imaginary;
     }
 
+    public Complex(Complex num) {
+        this.real = num.getReal();
+        this.imaginary = num.getImaginary();
+    }
+
     /**
      * regular
      * 

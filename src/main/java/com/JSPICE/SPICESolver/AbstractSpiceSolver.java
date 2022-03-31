@@ -27,6 +27,7 @@ public abstract class AbstractSpiceSolver {
     protected int iVSource = 0;
     protected int iISource = 0;
     protected int numHarmonics = 1;
+    protected AbstractSpiceResult result;
     
     public enum TimeStepType{
 	LINEAR,
@@ -167,8 +168,8 @@ public abstract class AbstractSpiceSolver {
      * @version 1.0.0
      * @exception
      */
-    public Complex[][] getResult() {
-        return x;
+    public AbstractSpiceResult getResult() {
+        return result;
     }
 
     /**

@@ -28,6 +28,7 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
     public TransientSpiceSolver() {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
+	result = new TransientSpiceResult();
     }
 
     @Override
@@ -83,6 +84,9 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
     public void solve(ArrayList<SElement> circuitElements,
 		      ArrayList<Wire> wires) {
 
+	/* Clear existing result */
+	result.clearResult();
+	
 	/* Populate time vector 
 	 * 
 	 * The time steps here may not be respected if 
@@ -97,7 +101,7 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	dcSolver.addElements(circuitElements);
 	dcSolver.addWires(wires);
 	dcSolver.solve();
-	x = dcSolver.getResult();
+	x = dcSolver.x;
 
 	for(int j = 0; j < time.length; j++){
 	    solve(circuitElements,
@@ -140,5 +144,7 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	
         x = ComplexMatrixOperations.computeLinearEquation(A, z);
 	x = addGNDToResult(x);
+
+	result.updateResult(x);
     }
 }

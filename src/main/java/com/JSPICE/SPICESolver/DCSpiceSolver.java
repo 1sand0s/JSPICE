@@ -21,6 +21,7 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
     public DCSpiceSolver() {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
+	result = new DCSpiceResult();
     }
     
     @Override
@@ -62,5 +63,7 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
 
         x = ComplexMatrixOperations.computeLinearEquation(A, z);
 	x = addGNDToResult(x);
+
+	result.updateResult(x);
     }
 }

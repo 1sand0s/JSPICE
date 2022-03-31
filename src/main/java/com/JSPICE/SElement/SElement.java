@@ -79,6 +79,18 @@ public abstract class SElement {
      * regular
      * 
      * @author 1sand0s
+     * @return Int[] : Terminal indices (global)
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    public int getTerminalIndex(ComponentTerminals terminal) {
+        return terminals.getTerminal(terminal);
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
      * @return ComponentTerminals[] : Terminal names
      * @since 1.0.0
      * @version 1.0.0

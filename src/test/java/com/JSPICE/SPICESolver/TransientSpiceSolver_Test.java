@@ -35,7 +35,9 @@ public class TransientSpiceSolver_Test {
 
 	/* Solution after Transient analysis */
         Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(-0.05, 0) } };
-
+	TransientSpiceResult expectedResult = new TransientSpiceResult();
+	expectedResult.updateResult(expected);
+	
 	/* Instantiate TransientSpiceSolver */
 	AbstractSpiceSolver solver = new TransientSpiceSolver();
 
@@ -113,14 +115,18 @@ public class TransientSpiceSolver_Test {
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
 
-	Complex actual[][] = solver.getResult();
+	TransientSpiceResult actual = (TransientSpiceResult) solver.getResult();
 
 	/* Assert if solver result matches expected solution */
-        assertTrue(ComplexMatrixOperations.compareMatrices(expected, actual, tol));
-	assertEquals(5, r1.getVoltage(actual)[0].magnitude(), tol);
-	assertEquals(5, r2.getVoltage(actual)[0].magnitude(), tol);
-	assertEquals(0.05, r1.getCurrent(actual, 0)[0].magnitude(), tol);
-	assertEquals(0.05, r2.getCurrent(actual, 0)[0].magnitude(), tol);
+	assertTrue(actual.resultMatch(0, expectedResult, tol));
+	assertEquals(expectedResult.getElementVoltage(0, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(0, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(0, r2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(0, r2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	//assertEquals(0.05, r1.getCurrent(actual, 0)[0].magnitude(), tol);
+	//assertEquals(0.05, r2.getCurrent(actual, 0)[0].magnitude(), tol);
     }
 
     /**
@@ -137,7 +143,9 @@ public class TransientSpiceSolver_Test {
 
 	/* Solution after DC analysis */
         Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(5, 0) }, { new Complex(-0.2, 0) } };
-
+	TransientSpiceResult expectedResult = new TransientSpiceResult();
+	expectedResult.updateResult(expected);
+	
 	/* Instantiate DCSpiceSolver */
 	AbstractSpiceSolver solver = new TransientSpiceSolver();
 
@@ -236,9 +244,9 @@ public class TransientSpiceSolver_Test {
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
 
-	Complex actual[][] = solver.getResult();
+	TransientSpiceResult actual = (TransientSpiceResult) solver.getResult();
 	
 	/* Assert if solver result matches expected solution */
-        assertTrue(ComplexMatrixOperations.compareMatrices(expected, actual, tol));
+	assertTrue(actual.resultMatch(0, expectedResult, tol));
     }
 }
