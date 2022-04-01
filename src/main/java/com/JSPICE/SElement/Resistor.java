@@ -80,6 +80,7 @@ public class Resistor extends SElement {
 				     Complex[][] z,
 				     Complex[][] result,
 				     int iSourceIndex,
+				     double time,
 				     double deltaT) {
 	stampMatrixDC(G, B, C, D, z, iSourceIndex);
     }

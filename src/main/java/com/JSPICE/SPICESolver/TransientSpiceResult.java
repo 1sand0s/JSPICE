@@ -81,12 +81,12 @@ public class TransientSpiceResult extends AbstractSpiceResult {
 
 	TransientSpiceResult result = (TransientSpiceResult) result1;
 	
-        if(x.get(j).length != result.x.get(j).length)
+        if(x.get(j).length != result.x.get(0).length)
 	    return false;
 	
 	for(int k = 0; k < x.get(j).length; k++){
-	    if(!(x.get(j)[k] == 0 && result.x.get(j)[k] == 0)){
-		if(!(Math.abs(result.x.get(j)[k] - x.get(j)[k]) / Math.abs(result.x.get(j)[k] + x.get(j)[k]) < tol)){
+	    if(!(x.get(j)[k] == 0 && result.x.get(0)[k] == 0)){
+		if(!(Math.abs(result.x.get(0)[k] - x.get(j)[k]) / Math.abs(result.x.get(0)[k] + x.get(j)[k]) < tol)){
 		    return false;
 		}
 	    }

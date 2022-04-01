@@ -62,8 +62,8 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	    else if(tStep == 0){
 		tStep = (tMax - tMin) / numPoints;
 	    }
-	    time = new double[numPoints];
-	    for(int j = 0; j < numPoints; j++){
+	    time = new double[numPoints + 1];
+	    for(int j = 0; j < (numPoints + 1); j++){
 		time[j] = tMin + j * tStep;
 	    }
 	    break;
@@ -103,17 +103,19 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	dcSolver.solve();
 	x = dcSolver.x;
 
-	for(int j = 0; j < time.length; j++){
+	for(int j = 0; j < (time.length - 1); j++){
 	    solve(circuitElements,
 		  wires,
-		  time[j]);
+		  time[j],
+		  time[j + 1] - time[j]);
 	}
     }
     
     @Override
     public void solve(ArrayList<SElement> circuitElements,
 		      ArrayList<Wire> wires,
-		      double t){
+		      double t,
+		      double deltaT){
 	
         int vSourceIndex = 0;
 	
@@ -133,7 +135,7 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 	
         for (int j = 0; j < circuitElements.size(); j++) {
             SElement element = circuitElements.get(j);
-            element.stampMatrixTransient(G, B, C, D, z, x, vSourceIndex, t);
+            element.stampMatrixTransient(G, B, C, D, z, x, vSourceIndex, t, deltaT);
 	    
             if (element instanceof VSource)
                 vSourceIndex++;

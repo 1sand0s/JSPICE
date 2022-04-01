@@ -155,7 +155,8 @@ public abstract class AbstractSpiceSolver {
      */
     public void solve(ArrayList<SElement> circuitElements,
 		      ArrayList<Wire> wires,
-		      double t){
+		      double t,
+		      double deltaT){
     }
 
     /**

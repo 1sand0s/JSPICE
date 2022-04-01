@@ -11,6 +11,7 @@ import com.JSPICE.SMath.Complex;
  */
 public abstract class VSource extends SElement {
     protected double voltage;
+    protected double frequency;
 
     @Override
     public double getValue() {
@@ -31,5 +32,9 @@ public abstract class VSource extends SElement {
     public Complex[] getCurrent(Complex[][] result,
 				double frequency) {
         return null;
+    }
+
+    public void setFrequency(double frequency){
+	this.frequency = frequency;
     }
 }

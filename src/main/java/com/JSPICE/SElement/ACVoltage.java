@@ -68,6 +68,7 @@ public class ACVoltage extends VSource {
 				     Complex[][] z,
 				     Complex[][] result,
 				     int iSourceIndex,
+				     double time,
 				     double deltaT) {
 	/* AC sources are not allowed for transient simulation */
     }

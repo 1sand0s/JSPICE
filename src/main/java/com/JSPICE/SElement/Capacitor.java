@@ -91,6 +91,7 @@ public class Capacitor extends SElement {
 				     Complex[][] z,
 				     Complex[][] result,
 				     int iSourceIndex,
+				     double time,
 				     double deltaT) {
 	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
 	int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
