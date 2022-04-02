@@ -11,6 +11,8 @@ used to compute node voltages and branch currents. They are commonly used in PCB
 
 2. AC Analysis
 
+3. Transient Analysis
+
 <h2>Requirements</h2>
 
 1. [Openjdk 17](https://jdk.java.net/17/)
