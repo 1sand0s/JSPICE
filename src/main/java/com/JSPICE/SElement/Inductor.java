@@ -54,6 +54,7 @@ public class Inductor extends SElement {
                               Complex[][] C,
                               Complex[][] D,
                               Complex[][] z,
+			      Complex[][] result,
                               int iSourceIndex) {
         int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
         int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
@@ -71,6 +72,7 @@ public class Inductor extends SElement {
                               Complex[][] C,
                               Complex[][] D,
                               Complex[][] z,
+			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
         int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);

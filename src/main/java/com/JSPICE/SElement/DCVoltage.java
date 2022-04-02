@@ -23,6 +23,7 @@ public class DCVoltage extends VSource {
                               Complex[][] C,
                               Complex[][] D,
                               Complex[][] z,
+			      Complex[][] result,
                               int iSourceIndex) {
         int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
         int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
@@ -42,6 +43,7 @@ public class DCVoltage extends VSource {
                               Complex[][] C,
                               Complex[][] D,
                               Complex[][] z,
+			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
         int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
@@ -67,6 +69,6 @@ public class DCVoltage extends VSource {
 				     int iSourceIndex,
 				     double time,
 				     double deltaT) {
-        stampMatrixDC(G, B, C, D, z, iSourceIndex);
+        stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }   
 }

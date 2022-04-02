@@ -47,6 +47,7 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
         C = new Complex[iVSource + iISource][wires.size()];
         D = new Complex[iVSource + iISource][iVSource + iISource];
         z = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
+        x = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
 
         numberNodes();
 
@@ -55,10 +56,11 @@ public class ACSpiceSolver extends AbstractSpiceSolver {
         ComplexMatrixOperations.initializeMatrices(C);
         ComplexMatrixOperations.initializeMatrices(D);
         ComplexMatrixOperations.initializeMatrices(z);
+	ComplexMatrixOperations.initializeMatrices(x);
 
         for (int j = 0; j < circuitElements.size(); j++) {
             SElement element = circuitElements.get(j);
-            element.stampMatrixAC(G, B, C, D, z, vSourceIndex, frequency);
+            element.stampMatrixAC(G, B, C, D, z, x, vSourceIndex, frequency);
 
             if (element instanceof VSource)
                 vSourceIndex++;

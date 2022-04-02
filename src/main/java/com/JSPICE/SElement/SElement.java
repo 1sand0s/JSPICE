@@ -151,6 +151,7 @@ public abstract class SElement {
                                        Complex[][] C,
                                        Complex[][] D,
                                        Complex[][] z,
+				       Complex[][] result,
                                        int iSourceIndex);
 
     /**
@@ -168,6 +169,7 @@ public abstract class SElement {
                                        Complex[][] C,
                                        Complex[][] D,
                                        Complex[][] z,
+				       Complex[][] result,
                                        int iSourceIndex,
                                        double frequency);
     /**
