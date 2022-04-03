@@ -22,6 +22,8 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
 	result = new DCSpiceResult();
+	/* Default tolerance for testing convergence of Newton-Raphson */
+	tol = 1e-5;
     }
     
     @Override
@@ -33,39 +35,54 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
     @Override
     public void solve(ArrayList<SElement> circuitElements,
 		      ArrayList<Wire> wires) {
-        int vSourceIndex = 0;
-	
-        G = new Complex[wires.size()][wires.size()];
+
+	G = new Complex[wires.size()][wires.size()];
         B = new Complex[wires.size()][iVSource + iISource];
         C = new Complex[iVSource + iISource][wires.size()];
         D = new Complex[iVSource + iISource][iVSource + iISource];
         z = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
 	x = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
 
+	/* Number Circuit nodes */
         numberNodes();
 
-        ComplexMatrixOperations.initializeMatrices(G);
-        ComplexMatrixOperations.initializeMatrices(B);
-        ComplexMatrixOperations.initializeMatrices(C);
-        ComplexMatrixOperations.initializeMatrices(D);
-        ComplexMatrixOperations.initializeMatrices(z);
+	/* Initial guess for all node voltages and branch currents are 0's*/
 	ComplexMatrixOperations.initializeMatrices(x);
 
-        for (int j = 0; j < circuitElements.size(); j++) {
-            SElement element = circuitElements.get(j);
+	/* Holds result after each Newton-Raphson iteration */
+	Complex xSolved[][];
+	
+	do{
+	    xSolved = x;
+	    int vSourceIndex = 0;
 
-            element.stampMatrixDC(G, B, C, D, z, x, vSourceIndex); 
+	    /* Re-initialize all matrices to 0's
+	     * [+] TODO : Optimize since only 'x' changes between 
+	     *            Newton-Raphson iterations
+	     */
+	    ComplexMatrixOperations.initializeMatrices(G);
+	    ComplexMatrixOperations.initializeMatrices(B);
+	    ComplexMatrixOperations.initializeMatrices(C);
+	    ComplexMatrixOperations.initializeMatrices(D);
+	    ComplexMatrixOperations.initializeMatrices(z);
 
-            if (element instanceof VSource)
-                vSourceIndex++;
-        }
+	    /* Stamp each circuit element into the MNA matrix */
+	    for (int j = 0; j < circuitElements.size(); j++) {
+		SElement element = circuitElements.get(j);
+		
+		element.stampMatrixDC(G, B, C, D, z, x, vSourceIndex); 
+		
+		if (element instanceof VSource)
+		    vSourceIndex++;
+	    }
+	    
+	    /* Exclude Row and Column corresponding to GND node to prevent singular matrix */
+	    Complex A[][] = constructMNAMatrix(G, B, C, D);
 
-	/* Exclude Row and Column corresponding to GND node to prevent singular matrix */
-        Complex A[][] = constructMNAMatrix(G, B, C, D);
-
-        x = ComplexMatrixOperations.computeLinearEquation(A, z);
-	x = addGNDToResult(x);
-
+	    x = ComplexMatrixOperations.computeLinearEquation(A, z);
+	    
+	} while(!ComplexMatrixOperations.compareMatrices(x, xSolved, tol));
+	x = addGNDToResult(x);	
 	result.updateResult(x);
     }
 }

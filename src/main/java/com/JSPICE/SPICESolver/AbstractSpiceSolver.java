@@ -28,6 +28,7 @@ public abstract class AbstractSpiceSolver {
     protected int iISource = 0;
     protected int numHarmonics = 1;
     protected AbstractSpiceResult result;
+    protected double tol;
     
     public enum TimeStepType{
 	LINEAR,
@@ -306,5 +307,20 @@ public abstract class AbstractSpiceSolver {
      * @exception
      */
     public void expandTime() {
+    }
+
+    /**
+     * @brief Populates simulation time vector. Valid only
+     *        for Transient simulation
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public void setTolerance(double tol) {
+	this.tol = tol;
     }
 }
