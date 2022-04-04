@@ -119,7 +119,7 @@ public class Inductor extends SElement {
 	 *
 	 * is = -i(t - dt) = -v(t - dt) * dt / L
 	 */
-	double voltage = getVoltage(result)[0].magnitude(); // v(t - dt)
+	double voltage = getVoltage(result)[0].getReal(); // v(t - dt)
         z[posNode][0].add(new Complex(-voltage * deltaT / inductance, 0));
 	z[negNode][0].add(new Complex(+voltage * deltaT / inductance, 0));
     }

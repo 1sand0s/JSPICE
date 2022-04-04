@@ -295,6 +295,28 @@ public abstract class AbstractSpiceSolver {
         return x1;
     }
 
+        /**
+     * @brief Adds GND row back to solver result
+     * 
+     * @author 1sand0s
+     * @param
+     * @return
+     * @since
+     * @version 1.0.0
+     * @exception
+     */
+    public Complex[][] removeGNDFromResult(Complex x[][]) {
+	Complex x1[][] = new Complex[x.length - 1][numHarmonics];
+	ComplexMatrixOperations.initializeMatrices(x1);
+	
+	for(int j = 0; j < (x.length - 1); j++){
+	    for(int k = 0; k < x[j].length; k++){
+		x1[j][k] = x[j + 1][k];
+	    }
+	}
+        return x1;
+    }
+
     /**
      * @brief Populates simulation time vector. Valid only
      *        for Transient simulation

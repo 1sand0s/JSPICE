@@ -29,6 +29,7 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
         circuitElements = new ArrayList<SElement>();
         wires = new ArrayList<Wire>();
 	result = new TransientSpiceResult();
+	tol = 1e-5;
     }
 
     @Override
@@ -117,35 +118,48 @@ public class TransientSpiceSolver extends AbstractSpiceSolver {
 		      double t,
 		      double deltaT){
 	
-        int vSourceIndex = 0;
-	
         G = new Complex[wires.size()][wires.size()];
         B = new Complex[wires.size()][iVSource + iISource];
         C = new Complex[iVSource + iISource][wires.size()];
         D = new Complex[iVSource + iISource][iVSource + iISource];
-        z = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
+        z = new Complex[wires.size() + iVSource + iISource][numHarmonics];
 	
         numberNodes();
+	
+	/* Holds result after each Newton-Raphson iteration */
+	Complex xSolved[][];
+	
+	do{
+	    xSolved = x;
+	    int vSourceIndex = 0;
 
-        ComplexMatrixOperations.initializeMatrices(G);
-        ComplexMatrixOperations.initializeMatrices(B);
-        ComplexMatrixOperations.initializeMatrices(C);
-        ComplexMatrixOperations.initializeMatrices(D);
-        ComplexMatrixOperations.initializeMatrices(z);
-	
-        for (int j = 0; j < circuitElements.size(); j++) {
-            SElement element = circuitElements.get(j);
-            element.stampMatrixTransient(G, B, C, D, z, x, vSourceIndex, t, deltaT);
+	    /* Re-initialize all matrices to 0's
+	     * [+] TODO : Optimize since only 'x' changes between 
+	     *            Newton-Raphson iterations
+	     */
+	    ComplexMatrixOperations.initializeMatrices(G);
+	    ComplexMatrixOperations.initializeMatrices(B);
+	    ComplexMatrixOperations.initializeMatrices(C);
+	    ComplexMatrixOperations.initializeMatrices(D);
+	    ComplexMatrixOperations.initializeMatrices(z);
+
+	    /* Stamp each circuit element into the MNA matrix */
+	    for (int j = 0; j < circuitElements.size(); j++) {
+		SElement element = circuitElements.get(j);
+		
+		element.stampMatrixTransient(G, B, C, D, z, x, vSourceIndex, t, deltaT); 
+		
+		if (element instanceof VSource)
+		    vSourceIndex++;
+	    }
 	    
-            if (element instanceof VSource)
-                vSourceIndex++;
-        }
-	
-	/* Exclude Row and Column corresponding to GND node to prevent singular matrix */
-        Complex A[][] = constructMNAMatrix(G, B, C, D);
-	
-        x = ComplexMatrixOperations.computeLinearEquation(A, z);
-	x = addGNDToResult(x);
+	    /* Exclude Row and Column corresponding to GND node to prevent singular matrix */
+	    Complex A[][] = constructMNAMatrix(G, B, C, D);
+
+	    x = ComplexMatrixOperations.computeLinearEquation(A, removeGNDFromResult(z));
+	    x = addGNDToResult(x);
+	    
+	} while(!ComplexMatrixOperations.compareMatrices(x, xSolved, tol));
 
 	result.updateResult(x);
     }

@@ -40,8 +40,8 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
         B = new Complex[wires.size()][iVSource + iISource];
         C = new Complex[iVSource + iISource][wires.size()];
         D = new Complex[iVSource + iISource][iVSource + iISource];
-        z = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
-	x = new Complex[wires.size() + iVSource + iISource - 1][numHarmonics];
+        z = new Complex[wires.size() + iVSource + iISource][numHarmonics];
+	x = new Complex[wires.size() + iVSource + iISource][numHarmonics];
 
 	/* Number Circuit nodes */
         numberNodes();
@@ -79,10 +79,10 @@ public class DCSpiceSolver extends AbstractSpiceSolver {
 	    /* Exclude Row and Column corresponding to GND node to prevent singular matrix */
 	    Complex A[][] = constructMNAMatrix(G, B, C, D);
 
-	    x = ComplexMatrixOperations.computeLinearEquation(A, z);
+	    x = ComplexMatrixOperations.computeLinearEquation(A, removeGNDFromResult(z));
+	    x = addGNDToResult(x);	
 	    
 	} while(!ComplexMatrixOperations.compareMatrices(x, xSolved, tol));
-	x = addGNDToResult(x);	
 	result.updateResult(x);
     }
 }

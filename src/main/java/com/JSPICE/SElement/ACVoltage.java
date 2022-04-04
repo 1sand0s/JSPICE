@@ -38,7 +38,7 @@ public class ACVoltage extends VSource {
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
         /* AC sources turned off during DC analysis */
-        z[G.length + iSourceIndex - 1][0].add(new Complex(voltage * 0, 0));
+        z[G.length + iSourceIndex][0].add(new Complex(voltage * 0, 0));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ACVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
-        z[G.length + iSourceIndex - 1][0].add(new Complex(voltage, 0));
+        z[G.length + iSourceIndex][0].add(new Complex(voltage, 0));
     }
 
     @Override

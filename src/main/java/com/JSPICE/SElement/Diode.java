@@ -22,16 +22,16 @@ public class Diode extends SElement {
         terminals = new Terminals(2,
                 new ComponentTerminals[] { ComponentTerminals.ANODE, ComponentTerminals.CATHODE });
     }
-
-    void setReverseSaturationCurrent(double iSat){
+    
+    public void setReverseSaturationCurrent(double iSat){
 	this.iSat = iSat;
     }
 
-    void setCrystalFactor(double cFactor){
+    public void setCrystalFactor(double cFactor){
 	this.cFactor = cFactor;
     }
 
-    void setThermalVoltage(double tVoltage){
+    public void setThermalVoltage(double tVoltage){
 	this.tVoltage = tVoltage;
     }
 
@@ -119,18 +119,19 @@ public class Diode extends SElement {
 	 *    
 	 */
 
-	double voltage = getVoltage(result)[0].magnitude();
+	double voltage = getVoltage(result)[0].getReal();
+	voltage = voltage > 0.8 ? 0.8 : voltage;
 	double id = evaluateShockelyEquation(voltage);
 	double R = (cFactor * tVoltage) / (id + iSat);
 	double id0 = id - voltage / R;
-	
+
         G[anode][anode].add(new Complex(1 / R, 0));
         G[cathode][cathode].add(new Complex(1 / R, 0));
         G[anode][cathode].add(new Complex(-1 / R, 0));
         G[cathode][anode].add(new Complex(-1 / R, 0));
 
-	z[anode][0] = new Complex(-id, 0);
-	z[cathode][0] = new Complex(id, 0);
+       	z[anode][0].add(new Complex(-id0, 0));
+	z[cathode][0].add(new Complex(id0, 0));
     }
 
     @Override
