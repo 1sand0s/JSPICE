@@ -377,9 +377,28 @@ public class TransientSpiceSolver_Test {
 	double tol = 1e-5;
 	
 	/* Solution after Transient analysis */
-	Complex expected[][] = { { new Complex(0, 0) }, { new Complex(-5.877852, 0) }, { new Complex(-0.48092389, 0) }, { new Complex(0.0539692862, 0) } };
+	Complex expected1[][] = { { new Complex(0.0, 0) }, { new Complex(0.0, 0) }, { new Complex(0.0, 0) }, { new Complex(0.0, 0) } };
+	Complex expected2[][] = { { new Complex(0.0, 0) }, { new Complex(5.877852522924732, 0) }, { new Complex(5.877852472924736, 0) }, { new Complex(-4.999999796071027E-10, 0) } };
+	Complex expected3[][] = { { new Complex(0.0, 0) }, { new Complex(9.510565162951535, 0) }, { new Complex(9.51056511295154, 0) }, { new Complex(-4.999999670035989E-10, 0) } };
+	Complex expected4[][] = { { new Complex(0.0, 0) }, { new Complex(9.510565162951536, 0) }, { new Complex(9.510565112951541, 0) }, { new Complex(-4.999999670035989E-10, 0) } };
+	Complex expected5[][] = { { new Complex(0.0, 0) }, { new Complex(5.877852522924733, 0) }, { new Complex(5.877852472924737, 0) }, { new Complex(-4.999999796071027E-10, 0) } };
+	Complex expected6[][] = { { new Complex(0.0, 0) }, { new Complex(0.0, 0) }, { new Complex(0.0, 0) }, { new Complex(0.0, 0) } };
+	Complex expected7[][] = { { new Complex(0.0, 0) }, { new Complex(-5.877852522924731, 0) }, { new Complex(-0.4809238945269585, 0) }, { new Complex(0.05396928628397773, 0) } };
+	Complex expected8[][] = { { new Complex(0.0, 0) }, { new Complex(-9.510565162951536, 0) }, { new Complex(-0.49426719327694835, 0) }, { new Complex(0.09016297969674589, 0) } };
+	Complex expected9[][] = { { new Complex(0.0, 0) }, { new Complex(-9.510565162951538, 0) }, { new Complex(-0.49426719321848683, 0) }, { new Complex(0.09016297969733053, 0) } };
+	Complex expected10[][] = { { new Complex(0.0, 0) }, { new Complex(-5.877852522924734, 0) }, { new Complex(-0.4809238943653899, 0) }, { new Complex(0.053969286285593464, 0) } };
+	
 	TransientSpiceResult expectedResult = new TransientSpiceResult();
-	expectedResult.updateResult(expected);
+	expectedResult.updateResult(expected1);
+	expectedResult.updateResult(expected2);
+	expectedResult.updateResult(expected3);
+	expectedResult.updateResult(expected4);
+	expectedResult.updateResult(expected5);
+	expectedResult.updateResult(expected6);
+	expectedResult.updateResult(expected7);
+	expectedResult.updateResult(expected8);
+	expectedResult.updateResult(expected9);
+	expectedResult.updateResult(expected10);
 	
 	/* Instantiate TransientSpiceSolver */
 	AbstractSpiceSolver solver = new TransientSpiceSolver();
@@ -470,11 +489,75 @@ public class TransientSpiceSolver_Test {
 	TransientSpiceResult actual = (TransientSpiceResult) solver.getResult();
 
 	/* Assert if solver result matches expected solution */
-	assertTrue(actual.resultMatch(9, expectedResult, tol));
+	assertTrue(actual.resultMatch(expectedResult, tol));
+	
 	assertEquals(expectedResult.getElementVoltage(0, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
-		     actual.getElementVoltage(9, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(0, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
 		     tol);
 	assertEquals(expectedResult.getElementVoltage(0, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(0, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(1, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(1, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(1, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(1, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(2, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(2, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(2, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(2, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(3, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(3, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(3, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(3, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(4, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(4, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(4, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(4, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+	
+	assertEquals(expectedResult.getElementVoltage(5, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(5, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(5, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(5, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(6, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(6, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(6, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(6, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(7, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(7, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(7, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(7, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+	
+	assertEquals(expectedResult.getElementVoltage(8, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(8, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(8, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     actual.getElementVoltage(8, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
+		     tol);
+
+	assertEquals(expectedResult.getElementVoltage(9, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(9, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(9, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
 		     actual.getElementVoltage(9, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
 		     tol);
 	//assertEquals(0.05, r1.getCurrent(actual, 0)[0].magnitude(), tol);
@@ -663,7 +746,7 @@ public class TransientSpiceSolver_Test {
 	
 	
 	assertEquals(expectedResult.getElementVoltage(1, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
-	     actual.getElementVoltage(1, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(1, r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
 		     tol);
 	assertEquals(expectedResult.getElementVoltage(1, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
 		     actual.getElementVoltage(1, d1, ComponentTerminals.ANODE, ComponentTerminals.CATHODE),
