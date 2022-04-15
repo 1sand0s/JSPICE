@@ -161,72 +161,87 @@ public abstract class AbstractSpiceSolver {
     }
 
     /**
-     * regular
+     * @breif Returns the result after solve
      * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @author 1sand0
+     * @return The result returned depends on the type of analysis and can be [DC/AC/Transient]SpiceResult instance
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
      */
     public AbstractSpiceResult getResult() {
         return result;
     }
 
     /**
-     * regular
+     * @brief Sets the frequency for the AC analysis
      * 
      * @author 1sand0s
-     * @param frequency
-     * @return
-     * @since
+     * @param frequency Frequency to solve for during AC analysis
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
+     * @exception UnsupportedOperationException
      */
     public void setFrequency(double frequency) {
+	throw new UnsupportedOperationException("Error: Must be invoked for ACSpiceSolver");
     }
     
     /**
-     * regular
+     * @brief Sets the time step for transient solver (may not be respected if
+     *        convergence cannot be achieved)
      * 
      * @author 1sand0s
-     * @param frequency
-     * @return
-     * @since
+     * @param tMin Minimum of time range for transient solver
+     * @param tMax Maximum of time range for transient solver
+     * @param numPoints Number of points to solve for in the interval [tMin, tMax]
+     * @param type Time step in [tMin, tMax] can either be LINEAR, LOGARITHMIC or PWL
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
+     * @exception UnsupportedOperationException
      */
     public void setTimeStep(double tmin,
 			    double tmax,
 			    int numPoints,
 			    TimeStepType type) {
+	throw new UnsupportedOperationException("Error: Must be invoked for TransientSpiceSolver");
     }
     
     /**
-     * regular
+     *  @brief Sets the time step for transient solver (may not be respected if
+     *        convergence cannot be achieved)
      * 
      * @author 1sand0s
-     * @param frequency
-     * @return
-     * @since
+     * @param tMin Minimum of time range for transient solver
+     * @param tMax Maximum of time range for transient solver
+     * @param tStep Time step in the interval [tMin, tMax]
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
+     * @exception UnsupportedOperationException
      */    
-    public void setTimeStep(double tmin,
-			    double tmax,
+    public void setTimeStep(double tMin,
+			    double tMax,
 			    double tStep) {
+	throw new UnsupportedOperationException("Error: Must be invoked for TransientSpiceSolver");
     }
 
     /**
-     * regular
+     * @brief Populates simulation time vector. Valid only
+     *        for Transient simulation
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
+     * @exception UnsupportedOperationException
+     */
+    public void expandTime(){
+	throw new UnsupportedOperationException("Error: Must be invoked for TransientSpiceSolver");
+    }
+
+    /**
+     * @brief Assigns each circuit node an Id/number
+     * 
+     * @author 1sand0
+     * @since 1.0.0
+     * @version 1.0.0
      */
     public void numberNodes() {
         int index = 1;
@@ -295,8 +310,8 @@ public abstract class AbstractSpiceSolver {
         return x1;
     }
 
-        /**
-     * @brief Adds GND row back to solver result
+    /**
+     * @brief Removes GND row back to solver result
      * 
      * @author 1sand0s
      * @param
@@ -316,31 +331,14 @@ public abstract class AbstractSpiceSolver {
 	}
         return x1;
     }
-
+    
     /**
-     * @brief Populates simulation time vector. Valid only
-     *        for Transient simulation
+     * @brief Sets the tolerance for NR convergence
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param tol tolerance for convergence
+     * @since 1.0.0
      * @version 1.0.0
-     * @exception
-     */
-    public void expandTime() {
-    }
-
-    /**
-     * @brief Populates simulation time vector. Valid only
-     *        for Transient simulation
-     * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
-     * @version 1.0.0
-     * @exception
      */
     public void setTolerance(double tol) {
 	this.tol = tol;
