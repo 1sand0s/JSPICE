@@ -30,8 +30,8 @@ public class DCVCVS extends VCVS {
 
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
-	C[iSourceIndex][dependentPositiveRef.getNodeIndex()].add(new Complex(gain, 0));
-        C[iSourceIndex][dependentNegativeRef.getNodeIndex()].add(new Complex(-gain, 0));
+	C[iSourceIndex][dependentPositiveRef.getNodeIndex()].add(new Complex(-gain, 0));
+        C[iSourceIndex][dependentNegativeRef.getNodeIndex()].add(new Complex(gain, 0));
 
         z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
