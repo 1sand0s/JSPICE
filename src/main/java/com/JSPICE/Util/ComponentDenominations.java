@@ -14,5 +14,6 @@ public enum ComponentDenominations {
     V,
     D,
     Q,
+    U,
     G
 }

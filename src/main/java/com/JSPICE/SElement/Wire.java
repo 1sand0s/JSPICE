@@ -12,6 +12,7 @@ public class Wire {
     private ArrayList<SElement> elements;
     private ArrayList<ComponentTerminals> terminals;
     private boolean isGND;
+    private int nodeIndex;
 
     public Wire() {
         elements = new ArrayList<SElement>();
@@ -100,5 +101,29 @@ public class Wire {
     public void deleteNode(int i) {
         elements.remove(i);
         terminals.remove(i);
+    }
+
+    /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param i : list index to remove
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    public void setNodeIndex(int nodeIndex){
+	this.nodeIndex = nodeIndex;
+    }
+
+        /**
+     * regular
+     * 
+     * @author 1sand0s
+     * @param i : list index to remove
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    public int getNodeIndex(){
+	return nodeIndex;
     }
 }

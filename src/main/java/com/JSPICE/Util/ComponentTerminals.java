@@ -15,5 +15,8 @@ public enum ComponentTerminals {
     EMITTER,
     BASE,
     COLLECTOR,
+    OPAMP_INVERTING,
+    OPAMP_NONINVERTING,
+    OPAMP_OUTPUT,
     GND
 }

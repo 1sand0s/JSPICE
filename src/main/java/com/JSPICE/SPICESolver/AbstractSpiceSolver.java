@@ -248,8 +248,11 @@ public abstract class AbstractSpiceSolver {
         int gndIndex = -1;
         for (int j = 0; j < wires.size(); j++) {
             if (!wires.get(j).isGND()) {
-                for (int i = 0; i < wires.get(j).getNumElements(); i++)
+                for (int i = 0; i < wires.get(j).getNumElements(); i++){
                     wires.get(j).getElementAtIndex(i).setTerminalIndex(index, wires.get(j).getTerminalAtIndex(i));
+		    wires.get(j).setNodeIndex(index);
+		}
+		
                 index++;
             } else
                 gndIndex = j;

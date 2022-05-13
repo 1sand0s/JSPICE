@@ -33,6 +33,7 @@ public class UnitConversion {
             ComponentDenominations.V, // Voltage Source
             ComponentDenominations.D, // Diode
             ComponentDenominations.Q, // Transistor
+	    ComponentDenominations.U, // IC					     
             ComponentDenominations.G};// Ground
 
     private static final String denominationNames[] = { "R", // Resistor
@@ -41,6 +42,7 @@ public class UnitConversion {
             "V", // Voltage Source
             "D", // Diode
             "Q", // Transistor
+	    "U", // IC
             "G"};// Ground
 
     /**

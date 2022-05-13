@@ -101,7 +101,7 @@ public class Diode extends SElement {
 	 *
 	 *
 	 * - To find the impedances and current sources to be stamped in, we first linearize the diode
-	 *   Schockely equation about the updated vd point for each iteration of Newton-Raphson. 
+	 *   Shockely equation about the updated vd point for each iteration of Newton-Raphson. 
 	 *  
 	 * - The updated vd for an example iteration is given above as vd*
 	 *
