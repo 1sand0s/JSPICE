@@ -8,13 +8,13 @@ import com.JSPICE.Util.ComponentTerminals;
  * @author 1sand0s
  *
  */
-public abstract class VCVS extends VSource {
+public abstract class CVS extends VSource {
 
     protected double gain;
     protected Wire dependentPositiveRef;
     protected Wire dependentNegativeRef;
     
-    public VCVS() {
+    public CVS() {
         denomination = ComponentDenominations.V;
        	gain = 0;
 	dependentPositiveRef = null;

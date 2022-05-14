@@ -8,7 +8,7 @@ import com.JSPICE.Util.ComponentTerminals;
  * @author 1sand0s
  *
  */
-public class DCVCVS extends VCVS {
+public class DCVCVS extends CVS {
     
     public DCVCVS() {
 	super();
