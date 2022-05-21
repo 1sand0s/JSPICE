@@ -61,7 +61,7 @@ public abstract class OpAmp extends CVS {
 	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }
     
-    @override
+    @Override
     public void stampMatrixTransient(Complex[][] G,
 					      Complex[][] B,
 					      Complex[][] C,
