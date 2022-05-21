@@ -20,7 +20,7 @@ public abstract class SElement {
     protected Terminals terminals;
 
     /**
-     * regular
+     * @brief Returns the Id of this SElement as a String
      * 
      * @author 1sand0s
      * @return String : Id with appropriate denomination (R,C,L etc)
@@ -32,24 +32,34 @@ public abstract class SElement {
     }
 
     /**
-     * regular
+     * @brief Gets the value of the SElement
      * 
      * @author 1sand0s
-     * @return Double : Value of the component (Resistance, Capacitance etc)
+     * @return double : Value of the component (Resistance, Capacitance etc)
      * @since 1.0.0
      * @version 1.0.0
+     * @exception throws UnsupportedOperationException Some SElements such as 
+     *            Diodes, Transistor etc do not have any particular value
+     *            associated with them therefore throw this exception
      */
-    public abstract double getValue();
+    public double getValue() throws UnsupportedOperationException {
+	throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
+    }
 
     /**
-     * regular
+     * @brief Sets the value of the SElement
      * 
      * @author 1sand0s
-     * @param val : Value to assign to the components (Resistance, Capacitance etc)
+     * @param double : value of the component (Resistance, Capacitance etc)
      * @since 1.0.0
      * @version 1.0.0
+     * @exception throws UnsupportedOperationException Some SElements such as 
+     *            Diodes, Transistor etc do not have any particular value
+     *            associated with them therefore throw this exception
      */
-    public abstract void setValue(double value);
+    public void setValue(double value) throws UnsupportedOperationException {
+	throw new UnsupportedOperationException("Error : setValue() not implemented for instance of " + this.getClass().toString());
+    }
 
     /**
      * regular

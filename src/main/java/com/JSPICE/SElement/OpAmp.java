@@ -16,6 +16,16 @@ public abstract class OpAmp extends CVS {
 	denomination = ComponentDenominations.U; 	
     }
 
+    @Override
+    public double getValue() {
+        throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
+    }
+
+    @Override
+    public void setValue(double value) {
+        throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
+    }
+    
     /**
      * regular
      * 

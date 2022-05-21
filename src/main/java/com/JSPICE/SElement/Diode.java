@@ -64,15 +64,6 @@ public class Diode extends SElement {
     }
 
     @Override
-    public double getValue() {
-        return 0.0;
-    }
-
-    @Override
-    public void setValue(double value) {
-    }
-
-    @Override
     public Complex[] getVoltage(Complex[][] result){
         int anode = terminals.getTerminal(ComponentTerminals.ANODE);
         int cathode = terminals.getTerminal(ComponentTerminals.CATHODE);
