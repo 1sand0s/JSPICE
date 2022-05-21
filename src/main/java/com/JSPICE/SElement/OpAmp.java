@@ -26,16 +26,7 @@ public abstract class OpAmp extends CVS {
         throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
     }
     
-    /**
-     * regular
-     * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
-     * @version 1.0.0
-     * @exception
-     */
+    @Override
     public void stampMatrixDC(Complex[][] G,
                                        Complex[][] B,
                                        Complex[][] C,

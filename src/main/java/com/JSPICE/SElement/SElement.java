@@ -147,12 +147,29 @@ public abstract class SElement {
 					 double frequency);
 
     /**
-     * regular
+     * @brief Stamps the complex admittances of the concerned
+     *        SElement. The value of independent sources are also
+     *        stamped here. (Must be implemented by derived classes)
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param Complex[][] : G       The admittance matrix (determined by the 
+     *                              interconnections between the passive circuit 
+     *                              elements and linearized equivalent passive 
+     *                              models of active circuit elements)
+     * @param Complex[][] : B       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : C       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : D       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : z       Contains the values of the independent 
+     *                              voltage and current sources
+     * @param Complex[][] : result  The result of the previous Newton-Raphson
+     *                              iteration
+     * @param int : iSourceIndex    Number of voltage sources in the circuit
+     * @param double : time         Used in transient simulation
+     * @param double : deltaT       Time step between two transient solves
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
@@ -165,12 +182,29 @@ public abstract class SElement {
                                        int iSourceIndex);
 
     /**
-     * regular
+     * @brief Stamps the complex admittances of the concerned
+     *        SElement. The value of independent sources are also
+     *        stamped here. (Must be implemented by derived classes)
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param Complex[][] : G       The admittance matrix (determined by the 
+     *                              interconnections between the passive circuit 
+     *                              elements and linearized equivalent passive 
+     *                              models of active circuit elements)
+     * @param Complex[][] : B       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : C       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : D       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : z       Contains the values of the independent 
+     *                              voltage and current sources
+     * @param Complex[][] : result  The result of the previous Newton-Raphson
+     *                              iteration
+     * @param int : iSourceIndex    Number of voltage sources in the circuit
+     * @param double : time         Used in transient simulation
+     * @param double : deltaT       Time step between two transient solves
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
@@ -183,12 +217,29 @@ public abstract class SElement {
                                        int iSourceIndex,
                                        double frequency);
     /**
-     * regular
+     * @brief Stamps the complex admittances of the concerned
+     *        SElement. The value of independent sources are also
+     *        stamped here. (Must be implemented by derived classes)
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param Complex[][] : G       The admittance matrix (determined by the 
+     *                              interconnections between the passive circuit 
+     *                              elements and linearized equivalent passive 
+     *                              models of active circuit elements)
+     * @param Complex[][] : B       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : C       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : D       Source mapping matrix (determined by the 
+     *                              interconnections of the voltage sources)
+     * @param Complex[][] : z       Contains the values of the independent 
+     *                              voltage and current sources
+     * @param Complex[][] : result  The result of the previous Newton-Raphson
+     *                              iteration
+     * @param int : iSourceIndex    Number of voltage sources in the circuit
+     * @param double : time         Used in transient simulation
+     * @param double : deltaT       Time step between two transient solves
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
