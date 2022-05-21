@@ -3,6 +3,7 @@
  */
 package com.JSPICE.SPICESolver;
 
+import com.JSPICE.SElement.ACVCVS;
 import com.JSPICE.SElement.ACVoltage;
 import com.JSPICE.SElement.GND;
 import com.JSPICE.SElement.Resistor;
@@ -362,7 +363,7 @@ public class ACSpiceSolver_Test {
 	/* Frequency of AC analysis */
 	double frequency = 1e9;
 
-	/* Solution after DC analysis */
+	/* Solution after AC analysis */
         Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(5, 0) }, { new Complex(5, 0) }, { new Complex(-0.2, 0) } };
 	ACSpiceResult expectedResult = new ACSpiceResult();
 	expectedResult.updateResult(expected);
@@ -370,7 +371,7 @@ public class ACSpiceSolver_Test {
 	/* Instantiate DCSpiceSolver */
 	AbstractSpiceSolver solver = new ACSpiceSolver();
 
-	/* Create a DC Source*/
+	/* Create a AC Source*/
 	ACVoltage source = new ACVoltage();
 
 	/* Create resistors */
@@ -389,7 +390,7 @@ public class ACSpiceSolver_Test {
         Wire w3 = new Wire();
 	Wire w4 = new Wire();
 
-	/* Set DC source voltage to 10V */
+	/* Set AC source voltage to 10V */
         source.setValue(10);
 
 	/* Set frequency of AC analysis */
@@ -461,6 +462,115 @@ public class ACSpiceSolver_Test {
 
 	ACSpiceResult actual = (ACSpiceResult) solver.getResult();
 	
+	/* Assert if solver result matches expected solution */
+        assertTrue(actual.resultMatch(expectedResult, tol));
+    }
+
+        /**
+     * @brief Test case for circuit with VCVS
+     * 
+     * @author 1sand0s
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    @Test
+    public void testVCVS1_AC() {
+	/* Tolerance for comparing solution */
+	double tol = 1e-5;
+
+	/* Frequency of AC analysis */
+	double frequency = 1e9;
+	
+	/* Solution after AC analysis */
+	Complex expected[][] = { { new Complex(0, 0) }, { new Complex(9.9999999, 0) }, { new Complex(9.090909, 0) }, { new Complex(-0.0090909, 0) }, { new Complex(-0.0818181, 0) } };
+	ACSpiceResult expectedResult = new ACSpiceResult();
+	expectedResult.updateResult(expected);
+	
+	/* Instantiate ACSpiceSolver */
+	AbstractSpiceSolver solver = new ACSpiceSolver();
+
+	/* Create a AC Source*/
+	ACVoltage source = new ACVoltage();
+
+	/* Create a AC VCVS */
+        ACVCVS vcvs = new ACVCVS();
+
+	/* Create resistors */
+	Resistor r1 = new Resistor();
+        Resistor r2 = new Resistor();
+
+	/* Create circuit GND element */
+	GND g1 = new GND();
+
+	/* Create wires to connect circuit elements */
+        Wire w1 = new Wire();
+        Wire w2 = new Wire();
+        Wire w3 = new Wire();
+
+	/* Set AC source voltage to 10V */
+        source.setValue(10);
+
+	/* Set AC VCVS gain t0 10 */
+	vcvs.setGain(10);
+
+	/* Set frequency of AC analysis */
+	solver.setFrequency(frequency);
+	
+	/* Set r1 and r2 resistances to 100 Ohm each */
+	r1.setValue(100);
+        r2.setValue(100);
+
+	/*                Circuit Topology
+	 *
+	 *
+	 *        w1       r1 100         w2
+	 *         ~-----^v^v^v^v^v---------~-------------------~
+	 *         |                        |                   |
+	 *         |                        |                   |
+	 *        ~~~                       >                   |                  
+	 *       ~ + ~ source               < r2               /+\  
+	 *       ~ - ~   10V                > 100             /   \10xV(r1)
+	 *        ~ ~                       <                 \   /
+	 *         |                        >                  \-/
+	 *         |                        |                   |
+         *         |          w3            |                   |
+	 *         ~------------------------~-------------------~
+	 *       -----  
+	 *        --- g1
+	 *         -
+	 */
+
+	/* Use wires to connect the circuit elements as shown above */
+        w1.addTerminal(source, ComponentTerminals.POS_NODE);
+        w1.addTerminal(r1, ComponentTerminals.POS_NODE);
+
+        w2.addTerminal(r1, ComponentTerminals.NEG_NODE);
+        w2.addTerminal(r2, ComponentTerminals.POS_NODE);
+	w2.addTerminal(vcvs, ComponentTerminals.POS_NODE);
+
+        w3.addTerminal(r2, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(source, ComponentTerminals.NEG_NODE);
+        w3.addTerminal(g1, ComponentTerminals.GND);
+	w3.addTerminal(vcvs, ComponentTerminals.NEG_NODE);
+
+	/* Add reference nodes for dependent voltage source*/
+	vcvs.setPositiveReference(w1);
+	vcvs.setNegativeReference(w2);
+
+	/* Add circuit elements to the solver */
+        solver.addElement(source);
+	solver.addElement(vcvs);
+        solver.addElement(r1);
+        solver.addElement(r2);
+        solver.addElement(g1);
+        solver.addWire(w1);
+        solver.addWire(w2);
+        solver.addWire(w3);
+
+	/* Solve for unknown node voltages and branch currents */
+        solver.solve();
+
+	ACSpiceResult actual = (ACSpiceResult) solver.getResult();
 	/* Assert if solver result matches expected solution */
         assertTrue(actual.resultMatch(expectedResult, tol));
     }
