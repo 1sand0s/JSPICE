@@ -57,8 +57,10 @@ public class SinusoidVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 	
-        /* Transient sources turned off during AC analysis */
-        z[G.length + iSourceIndex][0].add(new Complex(voltage * 0, 0));
+        /* Stamp amplitude during AC analysis 
+	 * +TODO : Add support for specifying phase
+	 */
+        z[G.length + iSourceIndex][0].add(new Complex(voltage, 0));
     }
     
     @Override
