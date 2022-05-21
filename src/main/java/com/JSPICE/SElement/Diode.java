@@ -22,15 +22,43 @@ public class Diode extends SElement {
         terminals = new Terminals(2,
                 new ComponentTerminals[] { ComponentTerminals.ANODE, ComponentTerminals.CATHODE });
     }
-    
+
+    /**
+     * @brief Sets the reverse saturation current of the diode model
+     *        (see Diode Shockley Equation)
+     * 
+     * @author 1sand0s
+     * @param double : iSat The reverse saturation current of the diode
+     *                      in Amperes
+     * @since 1.0.0
+     * @version 1.0.0
+     */
     public void setReverseSaturationCurrent(double iSat){
 	this.iSat = iSat;
     }
 
+    /**
+     * @brief Sets the crytal factor of the diode model
+     *        (see Diode Shockley Equation)
+     * 
+     * @author 1sand0s
+     * @param double : cFactor The crystal factor of the diode
+     * @since 1.0.0
+     * @version 1.0.0
+     */
     public void setCrystalFactor(double cFactor){
 	this.cFactor = cFactor;
     }
 
+    /**
+     * @brief Sets the thermal voltage of the diode model
+     *        (see Diode Shockley Equation)
+     * 
+     * @author 1sand0s
+     * @param double : tVoltage The thermal voltage of the diode
+     * @since 1.0.0
+     * @version 1.0.0
+     */
     public void setThermalVoltage(double tVoltage){
 	this.tVoltage = tVoltage;
     }
@@ -53,6 +81,15 @@ public class Diode extends SElement {
 						  result[cathode]));
     }
 
+    /**
+     * @brief Evaluates the Shockley equation given the diode drop
+     *        to compute the current through the diode
+     * 
+     * @author 1sand0s
+     * @param double : vd The voltage drop across the diode
+     * @since 1.0.0
+     * @version 1.0.0
+     */
     public double evaluateShockelyEquation(double vd){
 	return iSat * (Math.exp(vd / (cFactor * tVoltage)) - 1);
     }
