@@ -12,13 +12,13 @@ import com.JSPICE.Util.ComponentTerminals;
 public class Inductor extends SElement {
 
     private double inductance;
-    private double gMinResistance = 1e-3;
+    private double gMinResistance;
 
     public Inductor() {
         denomination = ComponentDenominations.L;
         inductance = 0;
-        terminals = new Terminals(2,
-                new ComponentTerminals[] { ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE });
+	gMinResistance = 1e-3;
+        terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
 
     @Override

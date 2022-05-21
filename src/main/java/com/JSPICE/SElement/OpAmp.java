@@ -11,8 +11,7 @@ import com.JSPICE.Util.ComponentTerminals;
 public abstract class OpAmp extends CVS {
     public OpAmp(){
 	super();
-	terminals = new Terminals(3,
-				  new ComponentTerminals[] { ComponentTerminals.OPAMP_INVERTING, ComponentTerminals.OPAMP_NONINVERTING, ComponentTerminals.OPAMP_OUTPUT });
+	terminals = new Terminals(3, ComponentTerminals.OPAMP_INVERTING, ComponentTerminals.OPAMP_NONINVERTING, ComponentTerminals.OPAMP_OUTPUT);
 	denomination = ComponentDenominations.U; 	
     }
 

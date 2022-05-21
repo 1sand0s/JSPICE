@@ -19,8 +19,7 @@ public class Diode extends SElement {
         iSat = 0;
 	cFactor = 0;
 	tVoltage = 0;
-        terminals = new Terminals(2,
-                new ComponentTerminals[] { ComponentTerminals.ANODE, ComponentTerminals.CATHODE });
+        terminals = new Terminals(2, ComponentTerminals.ANODE, ComponentTerminals.CATHODE);
     }
 
     /**

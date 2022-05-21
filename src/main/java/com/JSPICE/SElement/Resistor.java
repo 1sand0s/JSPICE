@@ -15,8 +15,7 @@ public class Resistor extends SElement {
     public Resistor() {
         denomination = ComponentDenominations.R;
         resistance = 0;
-        terminals = new Terminals(2,
-                new ComponentTerminals[] { ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE });
+        terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Terminals {
      * @param n     : number of terminals
      * @param names : name of terminals
      */
-    public Terminals(int n, ComponentTerminals[] names) {
+    public Terminals(int n, ComponentTerminals... names) {
         nodes = new ArrayList<Node>(n);
 
         for (int j = 0; j < n; j++)

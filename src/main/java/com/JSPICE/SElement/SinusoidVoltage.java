@@ -11,11 +11,7 @@ import com.JSPICE.Util.ComponentTerminals;
 public class SinusoidVoltage extends VSource {
     
     public SinusoidVoltage() {
-        denomination = ComponentDenominations.V;
-        voltage = 0;
-	frequency = 0;
-        terminals = new Terminals(2,
-				  new ComponentTerminals[] { ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE });
+        super();
     }
 
     @Override

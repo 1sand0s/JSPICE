@@ -12,7 +12,7 @@ public class GND extends SElement {
 
     public GND() {
         denomination = ComponentDenominations.G;
-        terminals = new Terminals(1, new ComponentTerminals[] { ComponentTerminals.GND });
+        terminals = new Terminals(1, ComponentTerminals.GND);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class GND extends SElement {
                               Complex[][] z,
 			      Complex[][] result,
                               int iSourceIndex) {
+	/* Do nothing */
     }
 
     @Override
@@ -59,6 +60,7 @@ public class GND extends SElement {
 			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
+	/* Do nothing */
     }
 
     @Override
@@ -71,5 +73,6 @@ public class GND extends SElement {
 				     int iSourceIndex,
 				     double time,
 				     double deltaT) {
+	/* Do nothing */
     }
 }

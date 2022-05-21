@@ -12,13 +12,13 @@ import com.JSPICE.Util.ComponentDenominations;
 public class Capacitor extends SElement {
 
     private double capacitance;
-    private double epsilonLoss = 1e9;
+    private double epsilonLoss;
 
     public Capacitor() {
         denomination = ComponentDenominations.C;
         capacitance = 0;
-        terminals = new Terminals(2,
-                new ComponentTerminals[] { ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE });
+	epsilonLoss = 1e9;
+        terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
 
     @Override

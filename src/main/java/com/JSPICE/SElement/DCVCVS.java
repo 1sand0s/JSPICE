@@ -45,6 +45,17 @@ public class DCVCVS extends CVS {
 			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
+	/* DC dependent sources turned off during AC analysis */
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
+
+        B[posNode][iSourceIndex].add(new Complex(1, 0));
+        B[negNode][iSourceIndex].add(new Complex(-1, 0));
+
+        C[iSourceIndex][posNode].add(new Complex(1, 0));
+        C[iSourceIndex][negNode].add(new Complex(-1, 0));
+
+        z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
     
     @Override

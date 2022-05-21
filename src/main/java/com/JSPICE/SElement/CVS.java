@@ -15,12 +15,10 @@ public abstract class CVS extends VSource {
     protected Wire dependentNegativeRef;
     
     public CVS() {
-        denomination = ComponentDenominations.V;
+	super();
        	gain = 0;
 	dependentPositiveRef = null;
 	dependentNegativeRef = null;
-        terminals = new Terminals(2,
-				  new ComponentTerminals[] { ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE });
     }
 
     /**
