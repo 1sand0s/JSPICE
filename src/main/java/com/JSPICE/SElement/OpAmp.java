@@ -49,16 +49,7 @@ public abstract class OpAmp extends CVS {
         z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
 
-    /**
-     * regular
-     * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
-     * @version 1.0.0
-     * @exception
-     */
+    @Override
     public void stampMatrixAC(Complex[][] G,
                                        Complex[][] B,
                                        Complex[][] C,
@@ -70,16 +61,7 @@ public abstract class OpAmp extends CVS {
 	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }
     
-    /**
-     * regular
-     * 
-     * @author 1sand0s
-     * @param
-     * @return
-     * @since
-     * @version 1.0.0
-     * @exception
-     */
+    @override
     public void stampMatrixTransient(Complex[][] G,
 					      Complex[][] B,
 					      Complex[][] C,
