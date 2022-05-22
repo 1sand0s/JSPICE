@@ -6,6 +6,7 @@ package com.JSPICE.SPICESolver;
 import com.JSPICE.SElement.*;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.SMath.Complex;
+import com.JSPICE.SElement.VSource.VSource;
 
 import java.util.ArrayList;
 

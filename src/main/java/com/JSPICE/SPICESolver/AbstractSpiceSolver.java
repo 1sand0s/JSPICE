@@ -7,8 +7,8 @@ import com.JSPICE.SElement.SElement;
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.SElement.Wire;
-import com.JSPICE.SElement.VSource;
-import com.JSPICE.SElement.ISource;
+import com.JSPICE.SElement.VSource.VSource;
+import com.JSPICE.SElement.ISource.ISource;
 
 import java.util.ArrayList;
 

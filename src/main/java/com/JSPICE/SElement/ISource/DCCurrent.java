@@ -1,16 +1,19 @@
-package com.JSPICE.SElement;
+package com.JSPICE.SElement.ISource;
 
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.Util.ComponentDenominations;
 import com.JSPICE.Util.ComponentTerminals;
+import com.JSPICE.SElement.SElement;
+import com.JSPICE.SElement.Wire;
+import com.JSPICE.SElement.Terminals;
 
 /**
  * @author 1sand0s
  *
  */
-public class DCVCVS extends CVS {
-    
-    public DCVCVS() {
+public class DCCurrent extends ISource {
+
+    public DCCurrent() {
 	super();
     }
 
@@ -28,12 +31,9 @@ public class DCVCVS extends CVS {
         B[posNode][iSourceIndex].add(new Complex(1, 0));
         B[negNode][iSourceIndex].add(new Complex(-1, 0));
 
-        C[iSourceIndex][posNode].add(new Complex(1, 0));
-        C[iSourceIndex][negNode].add(new Complex(-1, 0));
-	C[iSourceIndex][dependentPositiveRef.getNodeIndex()].add(new Complex(-gain, 0));
-        C[iSourceIndex][dependentNegativeRef.getNodeIndex()].add(new Complex(gain, 0));
+	D[iSourceIndex][iSourceIndex].add(new Complex(-1, 0));
 
-        z[G.length + iSourceIndex][0].add(new Complex(0, 0));
+        z[G.length + iSourceIndex][0].add(new Complex(current, 0));
     }
 
     @Override
@@ -45,8 +45,7 @@ public class DCVCVS extends CVS {
 			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
-	/* DC dependent sources turned off during AC analysis */
-	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+        int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
         int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
 
         B[posNode][iSourceIndex].add(new Complex(1, 0));
@@ -55,6 +54,9 @@ public class DCVCVS extends CVS {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
+	D[iSourceIndex][iSourceIndex].add(new Complex(1, 0));
+
+	/* DC sources turned off during AC analysis */
         z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
     

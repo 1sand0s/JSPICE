@@ -1,19 +1,19 @@
-/**
- * 
- */
-package com.JSPICE.SElement;
+package com.JSPICE.SElement.VSource;
 
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.Util.ComponentDenominations;
 import com.JSPICE.Util.ComponentTerminals;
+import com.JSPICE.SElement.SElement;
+import com.JSPICE.SElement.Wire;
+import com.JSPICE.SElement.Terminals;
 
 /**
  * @author 1sand0s
  *
  */
-public class ACVoltage extends VSource {
-
-    public ACVoltage() {
+public class ACVCVS extends CVS {
+    
+    public ACVCVS() {
 	super();
     }
 
@@ -25,16 +25,17 @@ public class ACVoltage extends VSource {
                               Complex[][] z,
 			      Complex[][] result,
                               int iSourceIndex) {
-        int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
-        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
 
+	/* Short circuit AC dependent source during DC Analysis*/
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+	int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
+	
         B[posNode][iSourceIndex].add(new Complex(1, 0));
         B[negNode][iSourceIndex].add(new Complex(-1, 0));
 
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
-        /* AC sources turned off during DC analysis */
         z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
 
@@ -47,21 +48,20 @@ public class ACVoltage extends VSource {
 			      Complex[][] result,
                               int iSourceIndex,
                               double frequency) {
-        int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
-        int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
-
+	int posNode = terminals.getTerminal(ComponentTerminals.POS_NODE);
+	int negNode = terminals.getTerminal(ComponentTerminals.NEG_NODE);
+	
         B[posNode][iSourceIndex].add(new Complex(1, 0));
         B[negNode][iSourceIndex].add(new Complex(-1, 0));
 
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
+	C[iSourceIndex][dependentPositiveRef.getNodeIndex()].add(new Complex(-gain, 0));
+        C[iSourceIndex][dependentNegativeRef.getNodeIndex()].add(new Complex(gain, 0));
 
-	/* r/_phi form to a + jb form conversion */
-	double real = voltage * Math.cos(phase);
-	double imag = voltage * Math.sin(phase);
-        z[G.length + iSourceIndex][0].add(new Complex(real, imag));
+        z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
-
+    
     @Override
     public void stampMatrixTransient(Complex[][] G,
 				     Complex[][] B,
@@ -72,7 +72,7 @@ public class ACVoltage extends VSource {
 				     int iSourceIndex,
 				     double time,
 				     double deltaT) {
-	/* AC sources turned off for transient simulation */
+        /* Short circuit AC dependent source during transient Analysis*/
 	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
-    }
+    }   
 }

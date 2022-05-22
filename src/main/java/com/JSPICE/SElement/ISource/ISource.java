@@ -1,38 +1,37 @@
-/**
- * 
- */
-package com.JSPICE.SElement;
+package com.JSPICE.SElement.ISource;
 
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.Util.ComponentDenominations;
 import com.JSPICE.Util.ComponentTerminals;
+import com.JSPICE.SElement.SElement;
+import com.JSPICE.SElement.Wire;
+import com.JSPICE.SElement.Terminals;
 
 /**
  * @author 1sand0s
  *
  */
-public abstract class VSource extends SElement {
-    protected double voltage;
+public abstract class ISource extends SElement {
+    protected double current;
     protected double frequency;
     protected double phase;
 
-    public VSource() {
-        denomination = ComponentDenominations.V;
-        voltage = 0;
+    public ISource() {
+        denomination = ComponentDenominations.I;
+        current = 0;
 	frequency = 0;
 	phase = 0;
         terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
-
     
     @Override
     public double getValue() {
-        return voltage;
+        return current;
     }
 
     @Override
     public void setValue(double value) {
-        voltage = value;
+        current = value;
     }
 
     @Override
@@ -48,7 +47,7 @@ public abstract class VSource extends SElement {
 
     /**
      * @brief Sets the frequency of the source (Valid for AC and 
-     *        SinusoidVoltage source)
+     *        SinusoidCurrent source)
      * 
      * @author 1sand0s
      * @return double : frequency The frequency of the source
@@ -61,7 +60,7 @@ public abstract class VSource extends SElement {
 
     /**
      * @brief Sets the phase of the source (Valid for AC and 
-     *        SinusoidVoltage source)
+     *        SinusoidCurrent source)
      * 
      * @author 1sand0s
      * @return double : phase The phase of the source

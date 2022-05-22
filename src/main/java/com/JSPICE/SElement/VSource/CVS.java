@@ -1,8 +1,11 @@
-package com.JSPICE.SElement;
+package com.JSPICE.SElement.VSource;
 
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.Util.ComponentDenominations;
 import com.JSPICE.Util.ComponentTerminals;
+import com.JSPICE.SElement.SElement;
+import com.JSPICE.SElement.Wire;
+import com.JSPICE.SElement.Terminals;
 
 /**
  * @author 1sand0s

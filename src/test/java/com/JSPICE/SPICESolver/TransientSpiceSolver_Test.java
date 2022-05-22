@@ -1,15 +1,9 @@
-/**
- * 
- */
 package com.JSPICE.SPICESolver;
 
-import com.JSPICE.SElement.DCVoltage;
-import com.JSPICE.SElement.SinusoidVoltage;
-import com.JSPICE.SElement.GND;
-import com.JSPICE.SElement.Resistor;
-import com.JSPICE.SElement.Diode;
-import com.JSPICE.SElement.Capacitor;
-import com.JSPICE.SElement.Wire;
+import com.JSPICE.SElement.*;
+import com.JSPICE.SElement.Passives.*;
+import com.JSPICE.SElement.VSource.*;
+import com.JSPICE.SElement.ISource.*;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.Util.ComponentTerminals;
 import com.JSPICE.SMath.Complex;

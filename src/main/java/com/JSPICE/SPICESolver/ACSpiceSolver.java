@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.JSPICE.SElement.*;
 import com.JSPICE.SMath.Complex;
 import com.JSPICE.SMath.ComplexMatrixOperations;
+import com.JSPICE.SElement.VSource.VSource;
 
 /**
  * @author 1sand0s
