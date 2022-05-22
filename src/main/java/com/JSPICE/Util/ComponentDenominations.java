@@ -12,6 +12,7 @@ public enum ComponentDenominations {
     L,
     C,
     V,
+    I,
     D,
     Q,
     U,

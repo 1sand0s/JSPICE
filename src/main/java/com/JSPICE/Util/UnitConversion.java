@@ -30,7 +30,8 @@ public class UnitConversion {
     private static final ComponentDenominations denominations[] = { ComponentDenominations.R, // Resistor
             ComponentDenominations.L, // Inductor
             ComponentDenominations.C, // Capacitor
-            ComponentDenominations.V, // Voltage Source
+            ComponentDenominations.V, // Voltage Source		    
+            ComponentDenominations.I, // Current Source
             ComponentDenominations.D, // Diode
             ComponentDenominations.Q, // Transistor
 	    ComponentDenominations.U, // IC					     
@@ -39,7 +40,8 @@ public class UnitConversion {
     private static final String denominationNames[] = { "R", // Resistor
             "L", // Inductor
             "C", // Capacitor
-            "V", // Voltage Source
+            "V", // Voltage Source		       
+            "I", // Current Source
             "D", // Diode
             "Q", // Transistor
 	    "U", // IC
