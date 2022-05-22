@@ -14,11 +14,13 @@ import com.JSPICE.Util.ComponentTerminals;
 public abstract class VSource extends SElement {
     protected double voltage;
     protected double frequency;
+    protected double phase;
 
     public VSource() {
         denomination = ComponentDenominations.V;
         voltage = 0;
 	frequency = 0;
+	phase = 0;
         terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
 
@@ -44,7 +46,29 @@ public abstract class VSource extends SElement {
         return null;
     }
 
+    /**
+     * @brief Sets the frequency of the source (Valid for AC and 
+     *        SinusoidVoltage source)
+     * 
+     * @author 1sand0s
+     * @return double : frequency The frequency of the source
+     * @since 1.0.0
+     * @version 1.0.0
+     */
     public void setFrequency(double frequency){
 	this.frequency = frequency;
+    }
+
+    /**
+     * @brief Sets the phase of the source (Valid for AC and 
+     *        SinusoidVoltage source)
+     * 
+     * @author 1sand0s
+     * @return double : phase The phase of the source
+     * @since 1.0.0
+     * @version 1.0.0
+     */    
+    public void setPhase(double phase){
+	this.phase = phase;
     }
 }

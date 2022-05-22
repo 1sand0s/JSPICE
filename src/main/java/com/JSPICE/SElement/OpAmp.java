@@ -14,12 +14,12 @@ public abstract class OpAmp extends CVS {
 	terminals = new Terminals(3, ComponentTerminals.OPAMP_INVERTING, ComponentTerminals.OPAMP_NONINVERTING, ComponentTerminals.OPAMP_OUTPUT);
 	denomination = ComponentDenominations.U; 	
     }
-
+    
     @Override
     public double getValue() {
         throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
     }
-
+    
     @Override
     public void setValue(double value) {
         throw new UnsupportedOperationException("Error : getValue() not implemented for instance of " + this.getClass().toString());
@@ -27,12 +27,12 @@ public abstract class OpAmp extends CVS {
     
     @Override
     public void stampMatrixDC(Complex[][] G,
-                                       Complex[][] B,
-                                       Complex[][] C,
-                                       Complex[][] D,
-                                       Complex[][] z,
-				       Complex[][] result,
-                                       int iSourceIndex){
+			      Complex[][] B,
+			      Complex[][] C,
+			      Complex[][] D,
+			      Complex[][] z,
+			      Complex[][] result,
+			      int iSourceIndex){
 	int invertingNode = terminals.getTerminal(ComponentTerminals.OPAMP_INVERTING);
         int nonInvertingNode = terminals.getTerminal(ComponentTerminals.OPAMP_NONINVERTING);
 	int outputNode = terminals.getTerminal(ComponentTerminals.OPAMP_OUTPUT);
@@ -50,26 +50,26 @@ public abstract class OpAmp extends CVS {
 
     @Override
     public void stampMatrixAC(Complex[][] G,
-                                       Complex[][] B,
-                                       Complex[][] C,
-                                       Complex[][] D,
-                                       Complex[][] z,
-				       Complex[][] result,
-                                       int iSourceIndex,
-                                       double frequency){
+			      Complex[][] B,
+			      Complex[][] C,
+			      Complex[][] D,
+			      Complex[][] z,
+			      Complex[][] result,
+			      int iSourceIndex,
+			      double frequency){
 	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }
     
     @Override
     public void stampMatrixTransient(Complex[][] G,
-					      Complex[][] B,
-					      Complex[][] C,
-					      Complex[][] D,
-					      Complex[][] z,
-					      Complex[][] result,
-					      int iSourceIndex,
-					      double time,
-					      double deltaT){
+				     Complex[][] B,
+				     Complex[][] C,
+				     Complex[][] D,
+				     Complex[][] z,
+				     Complex[][] result,
+				     int iSourceIndex,
+				     double time,
+				     double deltaT){
 	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }
 }

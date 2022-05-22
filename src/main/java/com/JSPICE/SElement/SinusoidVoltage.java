@@ -53,10 +53,10 @@ public class SinusoidVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 	
-        /* Stamp amplitude during AC analysis 
-	 * +TODO : Add support for specifying phase
-	 */
-        z[G.length + iSourceIndex][0].add(new Complex(voltage, 0));
+        /* Stamp amplitude during AC analysis */
+	double real = voltage * Math.cos(phase);
+	double imag = voltage * Math.sin(phase);
+        z[G.length + iSourceIndex][0].add(new Complex(real, imag));
     }
     
     @Override
@@ -78,7 +78,7 @@ public class SinusoidVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
-        z[G.length + iSourceIndex][0].add(new Complex(voltage * Math.sin(2 * Math.PI * frequency * time), 0));
+        z[G.length + iSourceIndex][0].add(new Complex(voltage * Math.sin(2 * Math.PI * frequency * time + phase), 0));
     }   
 }
 
