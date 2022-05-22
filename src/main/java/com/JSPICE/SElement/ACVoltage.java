@@ -35,7 +35,7 @@ public class ACVoltage extends VSource {
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
         /* AC sources turned off during DC analysis */
-        z[G.length + iSourceIndex][0].add(new Complex(voltage * 0, 0));
+        z[G.length + iSourceIndex][0].add(new Complex(0, 0));
     }
 
     @Override
@@ -56,7 +56,9 @@ public class ACVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
-        z[G.length + iSourceIndex][0].add(new Complex(voltage, 0));
+	double real = voltage * Math.cos(phase);
+	double imag = voltage * Math.sin(phase);
+        z[G.length + iSourceIndex][0].add(new Complex(real, imag));
     }
 
     @Override
@@ -69,6 +71,7 @@ public class ACVoltage extends VSource {
 				     int iSourceIndex,
 				     double time,
 				     double deltaT) {
-	/* AC sources are not allowed for transient simulation */
+	/* AC sources turned off for transient simulation */
+	stampMatrixDC(G, B, C, D, z, result, iSourceIndex);
     }
 }
