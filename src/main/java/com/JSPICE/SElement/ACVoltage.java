@@ -56,6 +56,7 @@ public class ACVoltage extends VSource {
         C[iSourceIndex][posNode].add(new Complex(1, 0));
         C[iSourceIndex][negNode].add(new Complex(-1, 0));
 
+	/* r/_phi form to a + jb form conversion */
 	double real = voltage * Math.cos(phase);
 	double imag = voltage * Math.sin(phase);
         z[G.length + iSourceIndex][0].add(new Complex(real, imag));
