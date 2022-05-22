@@ -160,12 +160,13 @@ public abstract class AbstractSpiceSolver {
      * @return
      * @since
      * @version 1.0.0
-     * @exception
+     * @exception UnsupportedOperationException
      */
     public void solve(ArrayList<SElement> circuitElements,
 		      ArrayList<Wire> wires,
 		      double t,
-		      double deltaT){
+		      double deltaT) throws UnsupportedOperationException {
+	throw new UnsupportedOperationException("Error : Cannot call solve on an instance of " + this.getClass().toString());
     }
 
     /**
