@@ -23,7 +23,6 @@ public abstract class ISource extends SElement {
 	phase = 0;
         terminals = new Terminals(2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE);
     }
-
     
     @Override
     public double getValue() {
