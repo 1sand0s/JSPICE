@@ -8,6 +8,7 @@ import com.JSPICE.SMath.Complex;
 import com.JSPICE.SMath.ComplexMatrixOperations;
 import com.JSPICE.SElement.Wire;
 import com.JSPICE.SElement.VSource;
+import com.JSPICE.SElement.ISource;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,9 @@ public abstract class AbstractSpiceSolver {
         circuitElements.add(element);
         if (element instanceof VSource)
             iVSource++;
+	else if (element instanceof ISource)
+            iISource++;
+
     }
 
     /**
@@ -66,7 +70,9 @@ public abstract class AbstractSpiceSolver {
 	for(int j = 0; j < elements.size(); j++){
 	    circuitElements.add(elements.get(j));
 	    if (elements.get(j) instanceof VSource)
-		iVSource++;   
+		iVSource++;
+	    else if (elements.get(j) instanceof ISource)
+		iISource++;   
 	}
     }
 
@@ -85,6 +91,8 @@ public abstract class AbstractSpiceSolver {
             if (circuitElements.get(j).getId_Int() == index) {
                 if (circuitElements.get(j) instanceof VSource)
                     iVSource--;
+		else if (circuitElements.get(j) instanceof ISource)
+		    iISource--;
                 circuitElements.remove(j);
                 break;
             }

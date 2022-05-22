@@ -28,10 +28,7 @@ public class DCCurrent extends ISource {
         B[posNode][iSourceIndex].add(new Complex(1, 0));
         B[negNode][iSourceIndex].add(new Complex(-1, 0));
 
-        C[iSourceIndex][posNode].add(new Complex(1, 0));
-        C[iSourceIndex][negNode].add(new Complex(-1, 0));
-
-	D[iSourceIndex][iSourceIndex].add(new Complex(1, 0));
+	D[iSourceIndex][iSourceIndex].add(new Complex(-1, 0));
 
         z[G.length + iSourceIndex][0].add(new Complex(current, 0));
     }
