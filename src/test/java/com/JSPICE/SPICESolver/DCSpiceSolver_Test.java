@@ -459,7 +459,7 @@ public class DCSpiceSolver_Test {
 	double tol = 1e-5;
 
 	/* Solution after DC analysis */
-	Complex expected[][] = { { new Complex(0, 0) }, { new Complex(500, 0) }, { new Complex(-10, 0) } };
+	Complex expected[][] = { { new Complex(0, 0) }, { new Complex(-500, 0) }, { new Complex(10, 0) } };
 	DCSpiceResult expectedResult = new DCSpiceResult();
 	expectedResult.updateResult(expected);
 	
@@ -524,6 +524,118 @@ public class DCSpiceSolver_Test {
         solver.addElement(g1);
         solver.addWire(w1);
         solver.addWire(w2);
+
+	/* Solve for unknown node voltages and branch currents */
+        solver.solve();
+
+	DCSpiceResult actual = (DCSpiceResult) solver.getResult();
+
+	/* Assert if solver result matches expected solution */
+        assertTrue(actual.resultMatch(expectedResult, tol));
+	assertEquals(expectedResult.getElementVoltage(r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(r1, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	assertEquals(expectedResult.getElementVoltage(r2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     actual.getElementVoltage(r2, ComponentTerminals.POS_NODE, ComponentTerminals.NEG_NODE),
+		     tol);
+	//assertEquals(0.05, r1.getCurrent(actual, 0)[0].magnitude(), tol);
+	//assertEquals(0.05, r2.getCurrent(actual, 0)[0].magnitude(), tol);
+    }
+
+    /**
+     * @brief Test case for a simple current divider
+     * 
+     * @author 1sand0s
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    @Test
+    public void testVoltageandCurrentSource_DC() {
+	/* Tolerance for comparing solution */
+	double tol = 1e-5;
+
+	/* Solution after DC analysis */
+	Complex expected[][] = { { new Complex(0, 0) }, { new Complex(10, 0) }, { new Complex(-45, 0) }, { new Complex(100, 0) }, { new Complex(-0.55, 0) }, { new Complex(1, 0) } };
+	DCSpiceResult expectedResult = new DCSpiceResult();
+	expectedResult.updateResult(expected);
+	
+	/* Instantiate DCSpiceSolver */
+	AbstractSpiceSolver solver = new DCSpiceSolver();
+
+	/* Create a DC Source*/
+	DCVoltage source1 = new DCVoltage();
+	DCCurrent source2 = new DCCurrent();
+
+	/* Create resistors */
+	Resistor r1 = new Resistor();
+        Resistor r2 = new Resistor();
+	Resistor r3 = new Resistor();
+
+	/* Create circuit GND element */
+	GND g1 = new GND();
+
+	/* Create wires to connect circuit elements */
+        Wire w1 = new Wire();
+        Wire w2 = new Wire();
+	Wire w3 = new Wire();
+	Wire w4 = new Wire();
+
+	/* Set DC source1 current to 10V */
+        source1.setValue(10);
+	source2.setValue(1);
+
+	/* Set r1 and r2 resistances to 100 Ohm each */
+	r1.setValue(100);
+        r2.setValue(100);
+        r3.setValue(100);
+
+	/*                Circuit Topology
+	 *
+	 *                                       source2 1A
+	 *         w1      r1 100          w2     ~ ~      
+	 *         ~-----^v^v^v^v^v---------~----~ <- ~---~ w3       
+	 *         |                        |     ~ ~     |
+	 *         |                        |             |
+	 *        ~~~                       >             >                        
+	 *       ~ + ~ source1              < r2          < r3
+	 *       ~ - ~   10V                > 100         > 100
+	 *        ~ ~                       <             <
+	 *         |                        >             >
+	 *         |                        |             |
+         *         |          w4            |             | 
+	 *         ~------------------------~-------------~
+	 *       -----  
+	 *        --- g1
+	 *         -
+	 */
+
+	/* Use wires to connect the circuit elements as shown above */
+        w1.addTerminal(source1, ComponentTerminals.POS_NODE);
+        w1.addTerminal(r1, ComponentTerminals.POS_NODE);
+
+	w2.addTerminal(r1, ComponentTerminals.NEG_NODE);
+        w2.addTerminal(r2, ComponentTerminals.POS_NODE);
+	w2.addTerminal(source2, ComponentTerminals.POS_NODE);
+
+	w3.addTerminal(source2, ComponentTerminals.NEG_NODE);
+	w3.addTerminal(r3, ComponentTerminals.POS_NODE);
+	
+        w4.addTerminal(g1, ComponentTerminals.GND);
+	w4.addTerminal(r3, ComponentTerminals.NEG_NODE);
+	w4.addTerminal(r2, ComponentTerminals.NEG_NODE);
+	w4.addTerminal(source1, ComponentTerminals.NEG_NODE);
+	
+	/* Add circuit elements to the solver */
+        solver.addElement(source1);
+	solver.addElement(source2);
+        solver.addElement(r1);
+        solver.addElement(r2);
+	solver.addElement(r3);
+        solver.addElement(g1);
+        solver.addWire(w1);
+        solver.addWire(w2);
+	solver.addWire(w3);
+	solver.addWire(w4);
 
 	/* Solve for unknown node voltages and branch currents */
         solver.solve();
