@@ -38,12 +38,12 @@ public abstract class AbstractSpiceSolver {
     };
     
     /**
-     * regular
+     * @brief Adds a circuit element to the circuit
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param element The element to be added to the circuit
+     * @return void
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
@@ -53,14 +53,13 @@ public abstract class AbstractSpiceSolver {
             iVSource++;
 	else if (element instanceof ISource)
             iISource++;
-
     }
 
     /**
-     * regular
+     * @brief Adds a list of circuit elements to the circuit
      * 
      * @author 1sand0s
-     * @param
+     * @param elements The list of elements to be added to the circuit
      * @return
      * @since
      * @version 1.0.0
@@ -68,26 +67,21 @@ public abstract class AbstractSpiceSolver {
      */
     public void addElements(ArrayList<SElement> elements) {
 	for(int j = 0; j < elements.size(); j++){
-	    circuitElements.add(elements.get(j));
-	    if (elements.get(j) instanceof VSource)
-		iVSource++;
-	    else if (elements.get(j) instanceof ISource)
-		iISource++;   
+	    this.addElement(elements.get(j));   
 	}
     }
 
     /**
-     * regular
+     * @brief Removes an indexed circuit element from the circuit 
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param index The index of the element to be removed
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
     public void removeElement(int index) {
-        for (int j = 0; j < circuitElements.size(); j++)
+        for (int j = 0; j < circuitElements.size(); j++) {
             if (circuitElements.get(j).getId_Int() == index) {
                 if (circuitElements.get(j) instanceof VSource)
                     iVSource--;
@@ -96,15 +90,15 @@ public abstract class AbstractSpiceSolver {
                 circuitElements.remove(j);
                 break;
             }
+	}
     }
 
     /**
-     * regular
+     * @brief Adds a wire to the circuit 
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param wire Wire to be added to the circuit
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
@@ -113,39 +107,40 @@ public abstract class AbstractSpiceSolver {
     }
 
     /**
-     * regular
+     * @brief Adds a list of wires to the circuit
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param wires List of wires to be added to the circuit
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
     public void addWires(ArrayList<Wire> wire) {
-        for(int j = 0; j < wire.size(); j++)
-	    wires.add(wire.get(j));
+        for(int j = 0; j < wire.size(); j++) {
+	    this.addWire(wire.get(j));
+	}
     }
 
     /**
-     * regular
+     * @brief Solves the matrix equation to compute node voltages and branch currents.
+     *        Must be overriden in deriving class
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
     public abstract void solve();
 
     /**
-     * regular
+     * @brief Solves the matrix equation to compute node voltages and branch currents,
+     *        given a list of circuit elements and connecting wires. Must be overriden 
+     *        in deriving class
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param circuitElements List of elements in the circuit
+     * @param wires List of wires connecting the circuit elements
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
@@ -215,7 +210,7 @@ public abstract class AbstractSpiceSolver {
     }
     
     /**
-     *  @brief Sets the time step for transient solver (may not be respected if
+     * @brief Sets the time step for transient solver (may not be respected if
      *        convergence cannot be achieved)
      * 
      * @author 1sand0s
@@ -326,9 +321,9 @@ public abstract class AbstractSpiceSolver {
      * @brief Removes GND row back to solver result
      * 
      * @author 1sand0s
-     * @param
-     * @return
-     * @since
+     * @param x MNA matrix with GND/referenced terminal column and row
+     * @return x1 MNA matrix with GND/referenced terminal column and row removed
+     * @since 1.0.0
      * @version 1.0.0
      * @exception
      */
